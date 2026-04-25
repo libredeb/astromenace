@@ -2,10 +2,10 @@
 
 ### Overall changes:
 
-- Prevented assets loading slow down with enabled VSync.
-- Added <Ctrl>+<V> keys support for copy text from clipboard into new pilot's profile name.
+- Prevented asset loading slow down with enabled VSync.
+- Added <Ctrl>+<V> keys support for copying text from clipboard into new pilot's profile name.
 - Improved textures cache work.
-- Improved preloaded 3d models cache work.
+- Improved preloaded 3D models cache work.
 - Changes for better work with SDL2-compat.
 
 # Version 1.4.2
@@ -25,7 +25,7 @@
 
 ### Overall code changes:
 
-- 3D objects rendering code optimized, minor corrected shaders.
+- 3D objects rendering code optimized, minor shader corrections.
 - Pirate turrets code optimized.
 - NPC flares code optimized.
 - All code comments translated into English.
@@ -48,7 +48,7 @@
 - Migrated from libSDL 1.2 to libSDL 2.
 - Added language detection on first start.
 - Renamed command line parameter "safe-mode" to "reset-config".
-- Fixed particle system's code for low FPS. All effects will looks now as they should.
+- Fixed particle system's code for low FPS. All effects will look as they should now.
 - Fixed old bug with turret's barrel rotation position during explosion.
 - Added Polish language translation, thanks to Jacek Fiedorowicz.
 - About 1300 minor fixes and changes since last release.
@@ -58,7 +58,7 @@
 ### Overall changes:
 
 - Added "Joystick DeadZone" option in "Options" menu.
-- Removed Ubuntu Family Fonts from game bundle. All bundled with game fonts are GPLv3 or OFL v1.1 now.
+- Removed Ubuntu Family Fonts from game bundle. All fonts bundled with the game are GPLv3 or OFL v1.1 now.
 - Separate Game Options menu code removed from source, fully-featured main Options menu available as Game Menu now.
 - Added standalone pack game data util.
 - Added fontconfig support.
@@ -68,10 +68,10 @@
 - Minor correction in text output code during game window initialization.
 - Added $XDG_CONFIG_HOME environment variable check during config file path detection.
 - Revised web browser search code, added xdg-open.
-- Some misspelled variables name corrected.
+- Some misspelled variable names corrected.
 - Added copy file from real FS to VFS function.
-- Improved font manager code. Menu Font option changes don't require game restart any more.
-- Improved font rendering code. Rendering operate with glyph's advance width (also known as its escapement) now.
+- Improved font manager code. Menu Font option changes don't require game restart anymore.
+- Improved font rendering code. Rendering operates with glyph's advance width (also known as its escapement) now.
 - Removed vw_TextureFromText function.
 - Added more text position checks in "Tips and hints" dialogs for proper text rendering with different fonts.
 - Fixed Info dialogs title position in Workshop menu.
@@ -83,13 +83,13 @@
 - Test image file with font generated bitmap now will be stored in TGA format.
 - Fixed memory overflow in VFS code.
 - All OpenGL functions in shadow mapping code moved to core.
-- Fixed minor bug in texture blend setup code (now will change OpenGL state proper during blend disabling).
+- Fixed minor bug in texture blend setup code (now will change OpenGL state properly during blend disabling).
 - Improved SkyBox rendering for more speed.
 - Improved textures related code, redundant OpenGL functions calls removed.
 - Fixed menu elements texture generation, will count on compression options now.
 - Improved lighting related code, redundant OpenGL functions calls removed.
 - Minor code corrections and improvements.
-- Improved vfs file creation code. VFS core code corrected to be more flexible.
+- Improved VFS file creation code. VFS core code corrected to be more flexible.
 - Fixed text input code in Profile Menu for percent sign (%).
 - Revised Profiles duplication and deletion code.
 - All language-related switch statements corrected, English language text/voice/images will be used now, if current language text/voice/images not implemented.
@@ -103,12 +103,12 @@
 - CMakeLists.txt file improved, added FS2VFS flag for AstroMenaceFS2VFS (standalone pack game data util) compilation.
 - Fixed CMakeLists.txt, will use freetype-config util now in order to find freetype headers location (multilib-aware freetype issue).
 - Fixed CFLAGS mess in CMakeLists.txt and Code::Blocks project files.
-- VAO feature turned off by default in configuration file from now due to game crashes and not proper work on some AMD and Intel video cards (probably, drivers issue).
+- VAO feature turned off by default in configuration file from now due to game crashes and improper work on some AMD and Intel video cards (probably, drivers issue).
 - Added game configuration file save after hardware detection to prevent configuration data loss.
 - Added game configuration file save at mission start and mission complete to prevent game progress lost.
 - Minor file mode bits correction in folder creation code for Linux.
-- CMakeLists.txt file improved, fontconfig lib and header files detection added as non required part. If fontconfig not installed, game will be compiled without fontconfig support.
-- CMakeLists.txt file improved, Xinerama lib and header files detection corrected. If Xinerama not installed, game will be compiled without Xinerama support.
+- CMakeLists.txt file improved, fontconfig lib and header files detection added as non-required part. If fontconfig is not installed, game will be compiled without fontconfig support.
+- CMakeLists.txt file improved, Xinerama lib and header files detection corrected. If Xinerama is not installed, game will be compiled without Xinerama support.
 - Updated GLext.h file.
 - Added GL_ARB_texture_compression_bptc OpenGL extension support.
 - Fixed compression flag in language-related textures initialization code during language change.
@@ -132,7 +132,7 @@
 ### Compilation flags changes (config.h):
 
 - Added "vfs_pack_standalone" compilation flag for standalone pack game data util compilation.
-- Added "fontconfig" compilation flag. With fontconfig you don't need fonts bundled with game, system fonts will be used. Make sure, that you have installed bold style TrueType, Type 1 or CFF font with en, de and ru languages support.
+- Added "fontconfig" compilation flag. With fontconfig you don't need fonts bundled with the game, system fonts will be used. Make sure that you have installed a bold style TrueType, Type 1 or CFF font with en, de and ru languages support.
 - Added "default_font_family" compilation flag. Default fontconfig font family.
 
 ### Game data changes:
@@ -142,103 +142,103 @@
 - Fixed planet 4 geometry.
 - Minor correction for License.txt file (GLext.h file info added).
 
-# Version 1.3.1 
+# Version 1.3.1
 
 ### Overall changes:
 
-- Added normal mapping support. Added normal maps for all motherships, planets, big asteroids, battle freighters, buildings. 
-- All jpeg image format textures replaced on tga image format. libjpeg removed from dependencies. 
-- All planetary, skybox, background tile-animated textures replaced on new one.
+- Added normal mapping support. Added normal maps for all motherships, planets, big asteroids, battle freighters, buildings.
+- All jpeg image format textures replaced with tga image format. libjpeg removed from dependencies.
+- All planetary, skybox, background tile-animated textures replaced with new ones.
 - Added keyboard control over active menu elements with Arrow Keys, "Tab" and "Enter" keyboard buttons.
-- (Linux) Game config file from now stored in "$HOME/.config/astromenace" folder, if "$HOME/.config" folder detected, otherwise in "$HOME/.astromenace" folder. Move "amconfig.xml" from "$HOME/.astromenace" to "$HOME/.config/astromenace" folder if you need. 
+- (Linux) Game config file from now stored in "$HOME/.config/astromenace" folder, if "$HOME/.config" folder detected, otherwise in "$HOME/.astromenace" folder. Move "amconfig.xml" from "$HOME/.astromenace" to "$HOME/.config/astromenace" folder if you need.
 
 ### Overall code changes:
 
-- Fixed bug in game data loading code, that might crash game in Linux/BSD on pirates missions. 
-- (CmakeList.txt) Improved libs and headers detection, added text output. 
-- Minor corrections in shadow mapping code. 
-- Added 3d models game native format "write" function, for future code purposes. 
-- Fixed minor memory leak on 3d object block destruction. 
-- Functions and variables names connected to VBO and IBO corrected. 
-- (GCC/MinGW) Fixed "unused parameter" warning for several functions, to avoid useless warnings.
-- Fixed particle systems rendering in Information and Workshop menus to avoid all particle systems visual frustum double check. 
-- Fixed 3d models (part of star system background) rendering, redundant OpenGL functions calls removed. 
-- Improved 3d models mesh explosion effect, all big triangles in 3d model mesh divide on smaller now for more smooth visual disappearing. 
-- Added shadow from destroyed 3d models pieces during object explosion for smooth shadow disappearing. 
-- Fixed source code for Mac OS X full support. Now, can be compiled with cmake without any problems, if you have all libs installed. Added XCode project files for game compilation in Mac OS X with XCode IDE.
-- Revised shadows shader for more speed. 
-- Fixed aspect ratio setup during first game start for monitors with standard aspect ratio. 
-- Minor resolutions list initialization code correction. 
-- Fixed bug in second game window initialization, if first window initialization failed. 
-- Added check for game configuration file content to avoid game crash if file content corrupted. 
-- Improved skybox stars rendering. 
-- Fixed bug with OpenAL device release at game shutdown. 
+- Fixed bug in game data loading code that might crash the game in Linux/BSD on pirate missions.
+- (CMakeLists.txt) Improved libs and headers detection, added text output.
+- Minor corrections in shadow mapping code.
+- Added 3D models game native format "write" function for future code purposes.
+- Fixed minor memory leak on 3D object block destruction.
+- Functions and variables names connected to VBO and IBO corrected.
+- (GCC/MinGW) Fixed "unused parameter" warning for several functions to avoid useless warnings.
+- Fixed particle systems rendering in Information and Workshop menus to avoid all particle systems visual frustum double check.
+- Fixed 3D models (part of star system background) rendering, redundant OpenGL functions calls removed.
+- Improved 3D models mesh explosion effect, all big triangles in 3D model mesh are divided into smaller ones now for smoother visual disappearing.
+- Added shadow from destroyed 3D models pieces during object explosion for smooth shadow disappearance.
+- Fixed source code for Mac OS X full support. Now can be compiled with cmake without any problems if you have all libs installed. Added XCode project files for game compilation in Mac OS X with XCode IDE.
+- Revised shadows shader for more speed.
+- Fixed aspect ratio setup during first game start for monitors with standard aspect ratio.
+- Minor resolutions list initialization code correction.
+- Fixed bug in second game window initialization, if first window initialization failed.
+- Added check for game configuration file content to avoid game crash if file content is corrupted.
+- Improved skybox stars rendering.
+- Fixed bug with OpenAL device release at game shutdown.
 - Fixed missile targeting, will not change target if current target still alive, if current target alive but not in front - target new object.
-- Improved targeting code. Missiles and weapons use "geometry center" now as target point in 3d object. 
-- Text manager revised for .csv file format support and more speed. 
-- Fixed bug with depth buffer range in shadow initialization, shadow mapping code revised. 
-- Improved work with depth buffer in Information menu and Workshop, redundant OpenGL functions calls removed. 
-- Fixed 3D object rotation in Information menu (will not rotate on right during up or down rotation any more). 
-- Fixed bug with 4 and 5 jeeps targeting (ion weapon). 
-- Minor code fix, multitexture functions pointers check added. 
-- Text related code improved for easy future new languages support. All text related code moved to "core". 
-- Fixed minor bug in particle systems visual frustrum check. 
-- Added missile trail effect. 
-- Added build number to VFS data file structure, to avoid game launch with outdated game data file. 
-- Added shortcut keys for emergency game exit: Ctrl+Q for Linux/Windows, Command+Q for Mac OS X. 
-- Improved explosion shaders (fragment shader optimized for explosions now). 
-- Minor code correction for wheels. 
-- Minor code correction for tile animation (texture matrix). 
-- Renamed several variables for more clear look code (legacy of DirectX game rendering code). 
-- Minor 3D models loading code optimization. 
-- Minor fix in particle generation code. 
-- Removed BMP image format support, all needs covered by TGA. 
-- Several Aliens Motherships visual effects removed. 
-- Added image game native VW2D format support. 
-- Minor shadow map generation improvement, removed z-fighting during pirate base models rendering with shadows. 
-- Fixed shadows rendering for some 3d models in Information menu.
+- Improved targeting code. Missiles and weapons use "geometry center" now as target point in 3D object.
+- Text manager revised for .csv file format support and more speed.
+- Fixed bug with depth buffer range in shadow initialization, shadow mapping code revised.
+- Improved work with depth buffer in Information menu and Workshop, redundant OpenGL functions calls removed.
+- Fixed 3D object rotation in Information menu (will not rotate to the right during up or down rotation anymore).
+- Fixed bug with 4 and 5 jeeps targeting (ion weapon).
+- Minor code fix, multitexture functions pointers check added.
+- Text related code improved for easy future new languages support. All text related code moved to "core".
+- Fixed minor bug in particle systems visual frustum check.
+- Added missile trail effect.
+- Added build number to VFS data file structure to avoid game launch with outdated game data file.
+- Added shortcut keys for emergency game exit: Ctrl+Q for Linux/Windows, Command+Q for Mac OS X.
+- Improved explosion shaders (fragment shader optimized for explosions now).
+- Minor code correction for wheels.
+- Minor code correction for tile animation (texture matrix).
+- Renamed several variables for clearer code look (legacy of DirectX game rendering code).
+- Minor 3D models loading code optimization.
+- Minor fix in particle generation code.
+- Removed BMP image format support, all needs covered by TGA.
+- Several Aliens Motherships visual effects removed.
+- Added image game native VW2D format support.
+- Minor shadow map generation improvement, removed z-fighting during pirate base models rendering with shadows.
+- Fixed shadows rendering for some 3D models in Information menu.
 - Minor particle system code improvement.
-- Changed background tile animated layer code, first layer can't be turned off any more.
-- Minor bug fixed in stars generation code (removed theoretical chance divide by zero during vector normalization, with game freeze). 
-- Added additional check for loaded textures to avoid duplicates. 
-- Fixed missile targeting, will not target objects out of range (count on left missile life time). 
-- Mersenne Twister random number generator source code replaced on pre-generated random numbers.
-- (Linux) Corrected web browsers list in installed web browser search code. 
-- Added XML parser code. TinyXML code removed from sources. 
-- Optimized mission script connected code for more speed. 
-- Fixed VFS error messages output, will use "stderr" now instead of normal stream. 
-- Fixed point lights color in player ship engines (antimatter engines). 
-- Changed menu backgroud script changer (will load scripts one by one now, instead of random). 
-- Added "shock wave" effect for missile trails during missile explosion. 
-- Fixed work with texture compression on modern video card that support glTexStorage2D.
-- Menu language and voice language change don't required game restart any more.
+- Changed background tile animated layer code, first layer can't be turned off anymore.
+- Minor bug fixed in stars generation code (removed theoretical chance of division by zero during vector normalization, with game freeze).
+- Added additional check for loaded textures to avoid duplicates.
+- Fixed missile targeting, will not target objects out of range (count on left missile life time).
+- Mersenne Twister random number generator source code replaced with pre-generated random numbers.
+- (Linux) Corrected web browsers list in installed web browser search code.
+- Added XML parser code. TinyXML code removed from sources.
+- Optimized mission script connected code for more speed.
+- Fixed VFS error messages output, will use "stderr" now instead of normal stream.
+- Fixed point lights color in player ship engines (antimatter engines).
+- Changed menu background script changer (will load scripts one by one now, instead of random).
+- Added "shock wave" effect for missile trails during missile explosion.
+- Fixed work with texture compression on modern video cards that support glTexStorage2D.
+- Menu language and voice language change don't require game restart anymore.
 
 ### Menu changes:
 
-- Fixed "Shadow Quality" option status, if hardware don't support FBO Depth size more than 16 bits (game require at least 24 bits for shadows). 
+- Fixed "Shadow Quality" option status, if hardware doesn't support FBO Depth size more than 16 bits (game requires at least 24 bits for shadows).
 - Added font preview in "Interface" menu.
 - Added "VSync" option in "Options" menu, default value is "Off".
-- Added PCF control in "Advanced" menu for shadow mapping shaders. 
-- "Texture Filtering Mode" option moved to "Advanced" menu. 
-- "Textures Quality" option moved to "Advanced" menu. 
-- "Gamma" option renamed to "Brightness". 
+- Added PCF control in "Advanced" menu for shadow mapping shaders.
+- "Texture Filtering Mode" option moved to "Advanced" menu.
+- "Textures Quality" option moved to "Advanced" menu.
+- "Gamma" option renamed to "Brightness".
 
 ### Compilation flags changes (config.h):
 
-- Added "portable". Game configuration file will be stored with game binary file. 
-- Added "separate_cc_vfs". Since game use content released under different licenses, you might need create separate VFS game data file (gamedata_cc.vfs) with CC BY-SA licensed content only. 
-- Removed "buildin_tynixml". 
+- Added "portable". Game configuration file will be stored with game binary file.
+- Added "separate_cc_vfs". Since game uses content released under different licenses, you might need to create a separate VFS game data file (gamedata_cc.vfs) with CC BY-SA licensed content only.
+- Removed "buildin_tynixml".
 
-### Game data changes: 
+### Game data changes:
 
 - Added license files for fonts.
-- Fixed shadow on game icons. 
-- Fixed normals in asteroid rings for planet 3d model with asteroid rings. 
-- Text .xml files merged and converted to .csv file format. 
-- Added more info about artwork licenses, since RAW_VFS_DATA included into SVN. 
-- All planetary textures replaced (thanks to guys from VegaTrek http://sourceforge.net/projects/vegatrek/). 
-- All skybox textures replaced on textures generated in Spacescape program (http://sourceforge.net/projects/spacescape/). 
-- Tile animated layer textures replaced. 
+- Fixed shadow on game icons.
+- Fixed normals in asteroid rings for planet 3D model with asteroid rings.
+- Text .xml files merged and converted to .csv file format.
+- Added more info about artwork licenses since RAW_VFS_DATA is included into SVN.
+- All planetary textures replaced (thanks to guys from VegaTrek http://sourceforge.net/projects/vegatrek/).
+- All skybox textures replaced with textures generated in Spacescape program (http://sourceforge.net/projects/spacescape/).
+- Tile animated layer textures replaced.
 - Fixed issue with license for models. More info added to License.txt file.
 
 # Version 1.3.0
@@ -255,7 +255,7 @@
 ### Overall code changes:
 
 - Fixed compilation error connected to "PFNGLCLIENTACTIVETEXTUREPROC" and new mesa version.
-- Fixed compilation warnings "deprecated conversion from string constant to ‘char*’" with new gcc version.
+- Fixed compilation warnings "deprecated conversion from string constant to 'char*'" with new gcc version.
 - Fixed several code issues for Windows game version compilation.
 - Fixed minor memory leak during game data file close.
 - Fixed bug with explosion initialization.
@@ -269,16 +269,16 @@
 - Fixed bug in particle system manager work with shaders.
 - Updated Windows Code::Blocks project for new version libsdl, libjpeg-turbo, libogg, libvorbis, libopenal-soft.
 - Updated glext.h file.
-- Updated TintXML code to version 2.6.2
+- Updated TinyXML code to version 2.6.2
 - Added PNG (via libpng) and BMP image formats support.
-- Added shader model detection for GLSL version more then 4.0.
+- Added shader model detection for GLSL version more than 4.0.
 - Added GL_ARB_texture_storage OpenGL extension support.
 - Added GL_ARB_vertex_array_object OpenGL extension support.
 - Added GL_ARB_framebuffer_object OpenGL extension support.
 - Added Multisample Coverage anti aliasing support via GL_NV_framebuffer_multisample_coverage OpenGL extension.
 - Added text warning about collision course detection.
 - Improved turrets barrel rotation and tile tracks animation.
-- Improved "Gamma" connected code. Now work in both - fullscreen and windowed game mode.
+- Improved "Gamma" connected code. Now works in both - fullscreen and windowed game mode.
 - Improved game initialization code.
 - Improved XML parser connected code.
 - Improved all textures connected code.
@@ -297,7 +297,7 @@
 - Added model rotation buttons in "Information" menu.
 - Added "Reload All" button in "Weaponry" menu.
 - Added "Voice volume" option in "Options" menu.
-- Added "Interface" sub-menu in "Options" menu. 
+- Added "Interface" sub-menu in "Options" menu.
 - Added "Menu Language" option in "Interface" menu.
 - Added "Voice Language" option in "Interface" menu.
 - Added "Menu Font" option in "Interface" menu.
@@ -315,19 +315,19 @@
 ### Launch options changes:
 
 - Added libSDL "SDL_VIDEO_FULLSCREEN_DISPLAY" environment variable support for Xinerama/TwinView.
-- Added "--pack" parameter to switch AstroMenace in VFS creation mode (terminal output only).
+- Added "--pack" parameter to switch AstroMenace into VFS creation mode (terminal output only).
 - Added "--rawdata" parameter (used with "--pack" only), to define raw data folder location (./RAW_VFS_DATA by default).
 - Removed "--noAA" parameter.
 
 ### Compilation flags changes (config.h):
 
 - Removed EN, DE and RU.
-- Added "joystick". Required libSDL compilled with "joystick" flag.
+- Added "joystick". Required libSDL compiled with "joystick" flag.
 - Added "compression". Compression during gamedata.vfs creation, game will take more time for loading in exchange of game data file size reducing (about 30 MB).
 - Added "vbo". VBO OpenGL extension support switcher (if defined - game will detect vbo support in hardware during initialization).
 - Added "png". Required libpng.
 - Added "gamedebug". More console output with debug info.
-- Added "buildin_tynixml". Compile with build-in tynixml lib (version 2.6.2) if defined.
+- Added "buildin_tynixml". Compile with build-in tinyxml lib (version 2.6.2) if defined.
 - Added "vao". VAO OpenGL extension support switcher (if defined - game will detect vao support in hardware during initialization).
 - Added "fbo". FBO OpenGL extension support switcher (if defined - game will detect fbo support in hardware during initialization).
 

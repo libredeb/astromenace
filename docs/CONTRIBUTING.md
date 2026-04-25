@@ -30,7 +30,7 @@ CONTINUE and BREAK statements in the middle of cycle could act like a trap. Try 
 
 ### Dynamic memory management
 
-Only [Smart Pointers] are allowed. Manual memory management are prohibited. Even if you need small temporary memory buffer, use std::vector or std::unique_ptr instead of new/delete.
+Only [Smart Pointers] are allowed. Manual memory management is prohibited. Even if you need small temporary memory buffer, use std::vector or std::unique_ptr instead of new/delete.
 
 ## AstroMenace Coding Style
 
