@@ -281,13 +281,8 @@ static void ResizeHUDParticleSystems()
  */
 static void InitHUDBorder()
 {
-    if (GameConfig().InternalWidth == config::VirtualWidth_Standard) {
-        constexpr unsigned tmpHash = constexpr_hash_djb2a("game/game_panel.tga");
-        HUDBorderTexture = GetPreloadedTextureAsset(tmpHash);
-    } else {
-        constexpr unsigned tmpHash = constexpr_hash_djb2a("game/game_panel2.tga");
-        HUDBorderTexture = GetPreloadedTextureAsset(tmpHash);
-    }
+    constexpr unsigned tmpHash = constexpr_hash_djb2a("game/game_panel.tga");
+    HUDBorderTexture = GetPreloadedTextureAsset(tmpHash);
 }
 
 /*
@@ -299,23 +294,8 @@ static void DrawHUDBorder()
         return;
     }
 
-    if (GameConfig().InternalWidth == config::VirtualWidth_Standard) {
-        sRECT SrcRect{0, 0, 1024, 74};
-        sRECT DstRect{0, 0, 1024, 74};
-        vw_Draw2D(DstRect, SrcRect, HUDBorderTexture, true, 1.0f);
-        return;
-    }
-
-    sRECT SrcRect{0, 0, 466, 73};
-    sRECT DstRect{0, 0, 466, 73};
-    vw_Draw2D(DstRect, SrcRect, HUDBorderTexture, true, 1.0f);
-
-    SrcRect(1, 74, 150, 145);
-    DstRect(540, 0, 540 + 149, 71);
-    vw_Draw2D(DstRect, SrcRect, HUDBorderTexture, true, 1.0f);
-
-    SrcRect(150, 74, 610, 145);
-    DstRect(768, 0, 768 + 460, 71);
+    sRECT SrcRect{0, 0, 1024, 74};
+    sRECT DstRect{0, 0, 768, 74};
     vw_Draw2D(DstRect, SrcRect, HUDBorderTexture, true, 1.0f);
 }
 
@@ -611,10 +591,7 @@ static void UpdateHUDProgressBars(std::weak_ptr<cSpaceShip> &SpaceShip, float En
 
     for (int i = 0; i < LastFilledArmorSegment; i++) {
         sRECT SrcRect(582 + i * 20, 0, 599 + i * 20, 64);
-        sRECT DstRect(204 + 582 + i * 20, 0, 204 + 599 + i * 20, 64);
-        if (GameConfig().InternalWidth == config::VirtualWidth_Standard) {
-            DstRect = SrcRect;
-        }
+        sRECT DstRect = SrcRect;
 
         float Transp = CurrentDrawArmorStatus * ProgressBarSegmentCount - i;
         if (Transp > 1.0f) {

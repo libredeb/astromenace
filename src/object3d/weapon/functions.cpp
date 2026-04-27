@@ -145,7 +145,7 @@ bool GetTurretOnTargetOrientation(const sVECTOR3D &TurretLocation, const sVECTOR
     sVECTOR3D PointRight{1.0f, 0.0f, 0.0f};
     vw_Matrix33CalcPoint(PointRight, TurretRotationMatrix);
 
-    // horizontal plane (up/down), note, OpenGL uses right-handed coordinate system
+    // horizontal plane (up/down), note, OpenGL use right-handed coordinate system
     float A, B, C, D;
     vw_GetPlaneABCD(A, B, C, D, TurretLocation, TurretLocation + Orientation, TurretLocation + PointRight);
     float ABCDNormalLength = vw_sqrtf(A * A + B * B + C * C);
@@ -176,7 +176,7 @@ bool GetTurretOnTargetOrientation(const sVECTOR3D &TurretLocation, const sVECTOR
     sVECTOR3D PointUp{0.0f, 1.0f, 0.0f};
     vw_Matrix33CalcPoint(PointUp, TurretRotationMatrix);
 
-    // vertical plane (left/right), note, OpenGL uses right-handed coordinate system
+    // vertical plane (left/right), note, OpenGL use right-handed coordinate system
     float A3, B3, C3, D3;
     vw_GetPlaneABCD(A3, B3, C3, D3, TurretLocation, TurretLocation + Orientation, TurretLocation + PointUp);
     float A3B3C3D3NormalLength = vw_sqrtf(A3 * A3 + B3 * B3 + C3 * C3);
@@ -189,7 +189,7 @@ bool GetTurretOnTargetOrientation(const sVECTOR3D &TurretLocation, const sVECTOR
     // with asinf(), arc sine could be computed in the interval [-1, +1] only
     vw_Clamp(tmpSineOfAngle, -1.0f, 1.0f);
 
-    // vertical plane (ahead/behind), note, OpenGL uses right-handed coordinate system
+    // vertical plane (ahead/behind), note, OpenGL use right-handed coordinate system
     float A2, B2, C2, D2;
     vw_GetPlaneABCD(A2, B2, C2, D2, TurretLocation, TurretLocation + PointRight, TurretLocation + PointUp);
     if (A2 * TargetLocation.x +

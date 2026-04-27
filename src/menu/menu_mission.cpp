@@ -219,13 +219,13 @@ void MissionMenu()
 
     sRECT SrcRect, DstRect;
     SrcRect(2, 2, 863-2, 484-2);
-    DstRect(GameConfig().InternalWidth/2-427, 175-15, GameConfig().InternalWidth/2-427+863-4, 175-15+484-4);
+    DstRect(4, 160, 764, 160+480);
     constexpr unsigned tmpHash1 = constexpr_hash_djb2a("menu/panel800_444_back.tga");
     vw_Draw2D(DstRect, SrcRect, GetPreloadedTextureAsset(tmpHash1), true, 0.9f * MenuContentTransp);
 
 
 
-    int X1 = GameConfig().InternalWidth/2 - 372;
+    int X1 = 12;
     int Y1 = 270;
 
 

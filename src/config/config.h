@@ -74,6 +74,9 @@ constexpr float VirtualHeight_Wide{768.0f};
 constexpr float VirtualWidth_Standard{1024.0f};
 constexpr float VirtualHeight_Standard{768.0f};
 
+constexpr float VirtualWidth_Square{768.0f};
+constexpr float VirtualHeight_Square{768.0f};
+
 } // config
 
 // This structure should be POD, since we "pack" it into config file
@@ -140,14 +143,12 @@ struct sGameConfig {
     int VoiceVolume{10};    // in-game voice volume [0, 10]
 
     int DisplayIndex{0};
-    int Width{1280};        // view size width
-    int Height{768};        // view size height
+    int Width{720};         // view size width (Hyperpixel 4.0)
+    int Height{720};        // view size height (Hyperpixel 4.0)
     bool Fullscreen{true};  // fullscreen mode (if false - windowed mode)
 
-    // FIXME should be removed, vw_GetInternalResolution() should be used instead in code
-    //       also, all directly usage of 1228/1024/768 should be removed as well
-    float InternalWidth{1228.0f};   // internal resolution's width
-    float InternalHeight{768.0f};   // internal resolution's height
+    float InternalWidth{config::VirtualWidth_Square};
+    float InternalHeight{config::VirtualHeight_Square};
 
     int VSync{0};
     int Brightness{5};

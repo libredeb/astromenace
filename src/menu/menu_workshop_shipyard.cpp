@@ -564,10 +564,10 @@ void Workshop_Shipyard()
 
     // fade-in/fade-out
     SrcRect(0,0,256,256 );
-    DstRect(GameConfig().InternalWidth/2-480, 100-32, GameConfig().InternalWidth/2-32, 450+32);
+    DstRect(GameConfig().InternalWidth/2-384, 100-32, GameConfig().InternalWidth/2-32, 450+32);
     constexpr unsigned tmpHash1 = constexpr_hash_djb2a("menu/back_spot2.tga");
     vw_Draw2D(DstRect, SrcRect, GetPreloadedTextureAsset(tmpHash1), true, 0.45f * MenuContentTransp);
-    DstRect(GameConfig().InternalWidth/2+32, 100-32, GameConfig().InternalWidth/2+480, 450+32);
+    DstRect(GameConfig().InternalWidth/2+32, 100-32, GameConfig().InternalWidth/2+376, 450+32);
     vw_Draw2D(DstRect, SrcRect, GetPreloadedTextureAsset(tmpHash1), true, 0.45f * MenuContentTransp);
 
 
@@ -587,7 +587,7 @@ void Workshop_Shipyard()
 
     // new ship
     vw_SetFontSize(24);
-    vw_DrawTextUTF32(GameConfig().InternalWidth/2-445, 600, 0, 0, 1.0f, sRGBCOLOR{eRGBCOLOR::white}, MenuContentTransp, vw_GetTextUTF32("Ship Stock"));
+    vw_DrawTextUTF32(GameConfig().InternalWidth/2-330, 600, 0, 0, 1.0f, sRGBCOLOR{eRGBCOLOR::white}, MenuContentTransp, vw_GetTextUTF32("Ship Stock"));
     ResetFontSize();
 
 
@@ -595,8 +595,8 @@ void Workshop_Shipyard()
     std::ostringstream tmpStream;
     tmpStream << std::fixed << std::setprecision(0)
               << vw_GetText(GetWorkshopShipName(CurrentWorkshopNewFighter)) << " Mk" << 1;
-    vw_DrawText(GameConfig().InternalWidth/2-448, 50+6, 0, 0, 1.0f, sRGBCOLOR{eRGBCOLOR::yellow}, MenuContentTransp, tmpStream.str());
-    if (DrawButton128_2(GameConfig().InternalWidth/2-197,50, vw_GetTextUTF32("Info"), MenuContentTransp, false)) {
+    vw_DrawText(GameConfig().InternalWidth/2-330, 50+6, 0, 0, 1.0f, sRGBCOLOR{eRGBCOLOR::yellow}, MenuContentTransp, tmpStream.str());
+    if (DrawButton128_2(GameConfig().InternalWidth/2-150,50, vw_GetTextUTF32("Info"), MenuContentTransp, false)) {
         SetCurrentDialogBox(eDialogBox::ShowShipInfo);
         DialogSpaceShip = WorkshopNewFighter;
     }
@@ -611,19 +611,19 @@ void Workshop_Shipyard()
     int SmSizeI3 = vw_TextWidthUTF32(vw_GetTextUTF32("Slot Levels:"));
     SmSizeI = std::max({SmSizeI, SmSizeI2, SmSizeI3});
 
-    vw_DrawTextUTF32(GameConfig().InternalWidth/2-440, 110, 0, 0, 1.0f, sRGBCOLOR{eRGBCOLOR::white}, 0.5f*MenuContentTransp, vw_GetTextUTF32("Armor:"));
+    vw_DrawTextUTF32(GameConfig().InternalWidth/2-330, 110, 0, 0, 1.0f, sRGBCOLOR{eRGBCOLOR::white}, 0.5f*MenuContentTransp, vw_GetTextUTF32("Armor:"));
     tmpStream.clear();
     tmpStream.str(std::string{});
     tmpStream << sharedWorkshopNewFighter->ArmorInitialStatus;
-    vw_DrawText(GameConfig().InternalWidth/2-440+14+SmSizeI, 110, 0, 0, 1.0f, sRGBCOLOR{eRGBCOLOR::white}, 0.5f*MenuContentTransp, tmpStream.str());
+    vw_DrawText(GameConfig().InternalWidth/2-330+14+SmSizeI, 110, 0, 0, 1.0f, sRGBCOLOR{eRGBCOLOR::white}, 0.5f*MenuContentTransp, tmpStream.str());
 
-    vw_DrawTextUTF32(GameConfig().InternalWidth/2-440, 130, 0, 0, 1.0f, sRGBCOLOR{eRGBCOLOR::white}, 0.5f*MenuContentTransp, vw_GetTextUTF32("Weapon Slots:"));
+    vw_DrawTextUTF32(GameConfig().InternalWidth/2-330, 130, 0, 0, 1.0f, sRGBCOLOR{eRGBCOLOR::white}, 0.5f*MenuContentTransp, vw_GetTextUTF32("Weapon Slots:"));
     tmpStream.clear();
     tmpStream.str(std::string{});
     tmpStream << sharedWorkshopNewFighter->WeaponSlots.size();
-    vw_DrawText(GameConfig().InternalWidth/2-440+14+SmSizeI, 130, 0, 0, 1.0f, sRGBCOLOR{eRGBCOLOR::white}, 0.5f*MenuContentTransp, tmpStream.str());
+    vw_DrawText(GameConfig().InternalWidth/2-330+14+SmSizeI, 130, 0, 0, 1.0f, sRGBCOLOR{eRGBCOLOR::white}, 0.5f*MenuContentTransp, tmpStream.str());
 
-    vw_DrawTextUTF32(GameConfig().InternalWidth/2-440, 150, 0, 0, 1.0f, sRGBCOLOR{eRGBCOLOR::white}, 0.5f*MenuContentTransp, vw_GetTextUTF32("Slot Levels:"));
+    vw_DrawTextUTF32(GameConfig().InternalWidth/2-330, 150, 0, 0, 1.0f, sRGBCOLOR{eRGBCOLOR::white}, 0.5f*MenuContentTransp, vw_GetTextUTF32("Slot Levels:"));
     tmpStream.clear();
     tmpStream.str(std::string{});
     if (!sharedWorkshopNewFighter->WeaponSlots.empty()) {
@@ -632,7 +632,7 @@ void Workshop_Shipyard()
     for (unsigned i = 1; i < sharedWorkshopNewFighter->WeaponSlots.size(); i++) {
         tmpStream << "/" << sharedWorkshopNewFighter->WeaponSlots[i].Type;
     }
-    vw_DrawText(GameConfig().InternalWidth/2-440+14+SmSizeI, 150, 0, 0, 1.0f, sRGBCOLOR{eRGBCOLOR::white}, 0.5f*MenuContentTransp, tmpStream.str());
+    vw_DrawText(GameConfig().InternalWidth/2-330+14+SmSizeI, 150, 0, 0, 1.0f, sRGBCOLOR{eRGBCOLOR::white}, 0.5f*MenuContentTransp, tmpStream.str());
 
     // draw hull cost
     float tmpTransp{MenuContentTransp};
@@ -644,23 +644,23 @@ void Workshop_Shipyard()
     tmpStream.clear();
     tmpStream.str(std::string{});
     tmpStream << vw_GetText("Ship Hull Cost") << ": " << GetWorkshopShipCost(CurrentWorkshopNewFighter);
-    vw_DrawText(GameConfig().InternalWidth/2-438, 420, 0, 0, 1.0f, tmpColor, tmpTransp, tmpStream.str());
+    vw_DrawText(GameConfig().InternalWidth/2-328, 420, 0, 0, 1.0f, tmpColor, tmpTransp, tmpStream.str());
 
 
     // borders
     SrcRect(0,0,400,35 );
-    DstRect(GameConfig().InternalWidth/2-457, 100-11, GameConfig().InternalWidth/2-57, 100+35-11);
+    DstRect(GameConfig().InternalWidth/2-384, 100-11, GameConfig().InternalWidth/2+16, 100+35-11);
     constexpr unsigned tmpHash2 = constexpr_hash_djb2a("menu/workshop_panel4.tga");
     vw_Draw2D(DstRect, SrcRect, GetPreloadedTextureAsset(tmpHash2), true, MenuContentTransp);
 
     SrcRect(0,0,400,173 );
-    DstRect(GameConfig().InternalWidth/2-457, 450-13, GameConfig().InternalWidth/2-57, 450+173-13);
+    DstRect(GameConfig().InternalWidth/2-384, 450-13, GameConfig().InternalWidth/2+16, 450+173-13);
     constexpr unsigned tmpHash3 = constexpr_hash_djb2a("menu/workshop_panel1.tga");
     vw_Draw2D(DstRect, SrcRect, GetPreloadedTextureAsset(tmpHash3), true, MenuContentTransp);
 
 
     // check mouse wheel
-    DstRect(GameConfig().InternalWidth/2-457, 100+35-11, GameConfig().InternalWidth/2-57, 450-13);
+    DstRect(GameConfig().InternalWidth/2-384, 100+35-11, GameConfig().InternalWidth/2+16, 450-13);
     if (vw_MouseOverRect(DstRect)) {
         if (vw_GetWheelStatus() != 0 && !isDialogBoxDrawing()) {
             CurrentWorkshopNewFighter += vw_GetWheelStatus();
@@ -680,21 +680,21 @@ void Workshop_Shipyard()
         vw_ResetWheelStatus();
     }
 
-    if (DrawButton128_2(GameConfig().InternalWidth/2-395, 482, vw_GetTextUTF32("Prev"), MenuContentTransp, false)) {
+    if (DrawButton128_2(GameConfig().InternalWidth/2-280, 482, vw_GetTextUTF32("Prev"), MenuContentTransp, false)) {
         CurrentWorkshopNewFighter--;
         if (CurrentWorkshopNewFighter < 1) {
             CurrentWorkshopNewFighter = 22;
         }
         WorkshopCreateNewShip();
     }
-    if (DrawButton128_2(GameConfig().InternalWidth/2-247, 482, vw_GetTextUTF32("Next"), MenuContentTransp, false)) {
+    if (DrawButton128_2(GameConfig().InternalWidth/2-192, 482, vw_GetTextUTF32("Next"), MenuContentTransp, false)) {
         CurrentWorkshopNewFighter++;
         if (CurrentWorkshopNewFighter > 22) {
             CurrentWorkshopNewFighter = 1;
         }
         WorkshopCreateNewShip();
     }
-    if (DrawButton200_2(GameConfig().InternalWidth/2-357, 533, vw_GetTextUTF32("Buy Ship"), MenuContentTransp, !CanBuy)) {
+    if (DrawButton200_2(GameConfig().InternalWidth/2-268, 533, vw_GetTextUTF32("Buy Ship"), MenuContentTransp, !CanBuy)) {
         BuyShip();
     }
 
@@ -707,7 +707,7 @@ void Workshop_Shipyard()
 
     // player ship
     vw_SetFontSize(24);
-    vw_DrawTextUTF32(GameConfig().InternalWidth/2+445-vw_TextWidthUTF32(vw_GetTextUTF32("Player Ship")), 600, 0, 0, 1.0f, sRGBCOLOR{eRGBCOLOR::white}, MenuContentTransp, vw_GetTextUTF32("Player Ship"));
+    vw_DrawTextUTF32(GameConfig().InternalWidth/2+376-vw_TextWidthUTF32(vw_GetTextUTF32("Player Ship")), 600, 0, 0, 1.0f, sRGBCOLOR{eRGBCOLOR::white}, MenuContentTransp, vw_GetTextUTF32("Player Ship"));
     ResetFontSize();
 
     // player ship/hull name
@@ -715,9 +715,9 @@ void Workshop_Shipyard()
     tmpStream.str(std::string{});
     tmpStream << vw_GetText(GetWorkshopShipName(GameConfig().Profile[CurrentProfile].ShipHull))
               << " Mk" << static_cast<int>(GameConfig().Profile[CurrentProfile].ShipHullUpgrade);
-    vw_DrawText(GameConfig().InternalWidth/2+64, 56, 0, 0, 1.0f, sRGBCOLOR{eRGBCOLOR::yellow}, MenuContentTransp, tmpStream.str());
+    vw_DrawText(GameConfig().InternalWidth/2+48, 56, 0, 0, 1.0f, sRGBCOLOR{eRGBCOLOR::yellow}, MenuContentTransp, tmpStream.str());
 
-    if (DrawButton128_2(GameConfig().InternalWidth/2+315, 50, vw_GetTextUTF32("Info"), MenuContentTransp, false)) {
+    if (DrawButton128_2(GameConfig().InternalWidth/2+230, 50, vw_GetTextUTF32("Info"), MenuContentTransp, false)) {
         SetCurrentDialogBox(eDialogBox::ShowShipInfo);
         DialogSpaceShip = WorkshopFighterGame;
     }
@@ -752,7 +752,7 @@ void Workshop_Shipyard()
             tmpColor = sRGBCOLOR{eRGBCOLOR::orange};
         }
         tmpStream << vw_GetText("Upgrade Hull Cost") << ": " << GetWorkshopShipCost(GameConfig().Profile[CurrentProfile].ShipHull);
-        vw_DrawText(GameConfig().InternalWidth/2+438-vw_TextWidth(tmpStream.str()), LinePos, 0, 0, 1.0f, tmpColor, tmpTransp, tmpStream.str());
+        vw_DrawText(GameConfig().InternalWidth/2+376-vw_TextWidth(tmpStream.str()), LinePos, 0, 0, 1.0f, tmpColor, tmpTransp, tmpStream.str());
 
         LinePos -= 20;
     }
@@ -766,35 +766,35 @@ void Workshop_Shipyard()
         tmpStream <<  vw_GetText("Repair Hull Cost") << ": "
                   << GetWorkshopShipRepairCost(GameConfig().Profile[CurrentProfile].ShipHull, WorkshopFighterGame);
         SizeI = vw_TextWidth(tmpStream.str());
-        vw_DrawText(GameConfig().InternalWidth/2+438-SizeI, LinePos, 0, 0, 1.0f, sRGBCOLOR{eRGBCOLOR::red}, CurrentAlert3*MenuContentTransp, tmpStream.str());
+        vw_DrawText(GameConfig().InternalWidth/2+376-SizeI, LinePos, 0, 0, 1.0f, sRGBCOLOR{eRGBCOLOR::red}, CurrentAlert3*MenuContentTransp, tmpStream.str());
         LinePos -= 20;
         NeedRepair = true;
 
         // text "Armor", red
-        vw_DrawTextUTF32(GameConfig().InternalWidth/2+74, 110, 0, 0, 1.0f, sRGBCOLOR{eRGBCOLOR::white}, 0.5f*MenuContentTransp, vw_GetTextUTF32("Armor:"));
+        vw_DrawTextUTF32(GameConfig().InternalWidth/2+56, 110, 0, 0, 1.0f, sRGBCOLOR{eRGBCOLOR::white}, 0.5f*MenuContentTransp, vw_GetTextUTF32("Armor:"));
         tmpStream.clear();
         tmpStream.str(std::string{});
         tmpStream << static_cast<int>(sharedWorkshopFighterGame->ArmorCurrentStatus) << "/"
                   << static_cast<int>(sharedWorkshopFighterGame->ArmorInitialStatus);
-        vw_DrawText(GameConfig().InternalWidth/2+74+14+SmSizeI, 110, 0, 0, 1.0f, sRGBCOLOR{eRGBCOLOR::red}, CurrentAlert3*MenuContentTransp, tmpStream.str());
+        vw_DrawText(GameConfig().InternalWidth/2+56+14+SmSizeI, 110, 0, 0, 1.0f, sRGBCOLOR{eRGBCOLOR::red}, CurrentAlert3*MenuContentTransp, tmpStream.str());
     } else {
         // text "Armor", normal
-        vw_DrawTextUTF32(GameConfig().InternalWidth/2+74, 110, 0, 0, 1.0f, sRGBCOLOR{eRGBCOLOR::white}, 0.5f*MenuContentTransp, vw_GetTextUTF32("Armor:"));
+        vw_DrawTextUTF32(GameConfig().InternalWidth/2+56, 110, 0, 0, 1.0f, sRGBCOLOR{eRGBCOLOR::white}, 0.5f*MenuContentTransp, vw_GetTextUTF32("Armor:"));
         tmpStream.clear();
         tmpStream.str(std::string{});
         tmpStream << static_cast<int>(sharedWorkshopFighterGame->ArmorCurrentStatus) << "/"
                   << static_cast<int>(sharedWorkshopFighterGame->ArmorInitialStatus);
-        vw_DrawText(GameConfig().InternalWidth/2+74+14+SmSizeI, 110, 0, 0,1.0f, sRGBCOLOR{eRGBCOLOR::white}, 0.5f*MenuContentTransp, tmpStream.str());
+        vw_DrawText(GameConfig().InternalWidth/2+56+14+SmSizeI, 110, 0, 0,1.0f, sRGBCOLOR{eRGBCOLOR::white}, 0.5f*MenuContentTransp, tmpStream.str());
     }
 
-    vw_DrawTextUTF32(GameConfig().InternalWidth/2+74, 130, 0, 0, 1.0f, sRGBCOLOR{eRGBCOLOR::white}, 0.5f*MenuContentTransp, vw_GetTextUTF32("Weapon Slots:"));
+    vw_DrawTextUTF32(GameConfig().InternalWidth/2+56, 130, 0, 0, 1.0f, sRGBCOLOR{eRGBCOLOR::white}, 0.5f*MenuContentTransp, vw_GetTextUTF32("Weapon Slots:"));
     tmpStream.clear();
     tmpStream.str(std::string{});
     tmpStream << sharedWorkshopFighterGame->WeaponSlots.size();
-    vw_DrawText(GameConfig().InternalWidth/2+74+14+SmSizeI, 130, 0, 0, 1.0f, sRGBCOLOR{eRGBCOLOR::white}, 0.5f*MenuContentTransp, tmpStream.str());
+    vw_DrawText(GameConfig().InternalWidth/2+56+14+SmSizeI, 130, 0, 0, 1.0f, sRGBCOLOR{eRGBCOLOR::white}, 0.5f*MenuContentTransp, tmpStream.str());
 
 
-    vw_DrawTextUTF32(GameConfig().InternalWidth/2+74, 150, 0, 0, 1.0f, sRGBCOLOR{eRGBCOLOR::white}, 0.5f*MenuContentTransp, vw_GetTextUTF32("Slot Levels:"));
+    vw_DrawTextUTF32(GameConfig().InternalWidth/2+56, 150, 0, 0, 1.0f, sRGBCOLOR{eRGBCOLOR::white}, 0.5f*MenuContentTransp, vw_GetTextUTF32("Slot Levels:"));
     tmpStream.clear();
     tmpStream.str(std::string{});
     if (!sharedWorkshopFighterGame->WeaponSlots.empty()) {
@@ -803,7 +803,7 @@ void Workshop_Shipyard()
     for (unsigned i = 1; i < sharedWorkshopFighterGame->WeaponSlots.size(); i++) {
         tmpStream << "/" << sharedWorkshopFighterGame->WeaponSlots[i].Type;
     }
-    vw_DrawText(GameConfig().InternalWidth/2+74+14+SmSizeI, 150, 0, 0, 1.0f, sRGBCOLOR{eRGBCOLOR::white}, 0.5f*MenuContentTransp, tmpStream.str());
+    vw_DrawText(GameConfig().InternalWidth/2+56+14+SmSizeI, 150, 0, 0, 1.0f, sRGBCOLOR{eRGBCOLOR::white}, 0.5f*MenuContentTransp, tmpStream.str());
 
 
 
@@ -814,27 +814,27 @@ void Workshop_Shipyard()
     tmpStream << vw_GetText("Ship Cost") << ": "
               << GetWorkshopShipFullCost(GameConfig().Profile[CurrentProfile].ShipHull, WorkshopFighterGame);
     SizeI = vw_TextWidth(tmpStream.str());
-    vw_DrawText(GameConfig().InternalWidth/2+438-SizeI, LinePos, 0, 0, 1.0f, sRGBCOLOR{eRGBCOLOR::white}, MenuContentTransp, tmpStream.str());
+    vw_DrawText(GameConfig().InternalWidth/2+376-SizeI, LinePos, 0, 0, 1.0f, sRGBCOLOR{eRGBCOLOR::white}, MenuContentTransp, tmpStream.str());
 
 
     // borders
     SrcRect(0,0,400,35 );
-    DstRect(GameConfig().InternalWidth/2+57, 100-11, GameConfig().InternalWidth/2+457, 100+35-11);
+    DstRect(GameConfig().InternalWidth/2-24, 100-11, GameConfig().InternalWidth/2+376, 100+35-11);
     constexpr unsigned tmpHash4 = constexpr_hash_djb2a("menu/workshop_panel4.tga");
     vw_Draw2D(DstRect, SrcRect, GetPreloadedTextureAsset(tmpHash4), true, MenuContentTransp);
 
     SrcRect(0,0,400,173 );
-    DstRect(GameConfig().InternalWidth/2+57, 450-13, GameConfig().InternalWidth/2+457, 450+173-13);
+    DstRect(GameConfig().InternalWidth/2-24, 450-13, GameConfig().InternalWidth/2+376, 450+173-13);
     constexpr unsigned tmpHash5 = constexpr_hash_djb2a("menu/workshop_panel1+.tga");
     vw_Draw2D(DstRect, SrcRect, GetPreloadedTextureAsset(tmpHash5), true, MenuContentTransp);
 
 
 
-    if (DrawButton200_2(GameConfig().InternalWidth/2+153, 482, vw_GetTextUTF32("Repair Hull"), MenuContentTransp, !NeedRepair)) {
+    if (DrawButton200_2(GameConfig().InternalWidth/2+116, 482, vw_GetTextUTF32("Repair Hull"), MenuContentTransp, !NeedRepair)) {
         RepairShip();
     }
 
-    if (DrawButton200_2(GameConfig().InternalWidth/2+153, 533, vw_GetTextUTF32("Upgrade Hull"), MenuContentTransp, !CanUpgrade)) {
+    if (DrawButton200_2(GameConfig().InternalWidth/2+116, 533, vw_GetTextUTF32("Upgrade Hull"), MenuContentTransp, !CanUpgrade)) {
         UpgradeShip();
     }
 

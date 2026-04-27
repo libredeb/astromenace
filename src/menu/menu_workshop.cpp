@@ -373,7 +373,7 @@ void WorkshopMenu()
 
     // buttons
 
-    int X = GameConfig().InternalWidth / 2 - 482;
+    int X = 4;
     int Y = 180+100*5;
     if (DrawButton128_2(X,Y, vw_GetTextUTF32("BACK"), MenuContentTransp, false)) {
         cCommand::GetInstance().Set(eCommand::SWITCH_TO_MISSION);
@@ -387,7 +387,7 @@ void WorkshopMenu()
 
 
 
-    X = GameConfig().InternalWidth / 2 - 320;
+    X = 140;
     bool Off = false;
     if (CurrentWorkshop == 1) {
         Off = true;
@@ -409,7 +409,7 @@ void WorkshopMenu()
     }
 
 
-    X = GameConfig().InternalWidth / 2 - 100;
+    X = 284;
     Off = false;
     if (CurrentWorkshop == 2) {
         Off = true;
@@ -430,7 +430,7 @@ void WorkshopMenu()
     }
 
 
-    X = GameConfig().InternalWidth / 2 + 120;
+    X = 428;
     Off = false;
     if (CurrentWorkshop == 3) {
         Off = true;
@@ -453,7 +453,7 @@ void WorkshopMenu()
 
 
 
-    X = GameConfig().InternalWidth / 2 + 354;
+    X = 636;
     if (DrawButton128_2(X,Y, vw_GetTextUTF32("START"), MenuContentTransp, false)) {
         if (GameConfig().NeedShowHint[4]) {
             SetCurrentDialogBox(eDialogBox::ShortkeyTipsAndTricks);
@@ -502,11 +502,11 @@ void WorkshopDrawShip(std::weak_ptr<cSpaceShip> &SpaceShip, int Mode)
         sharedSpaceShip->SetRotation(sVECTOR3D{0.0f, 0.0f, CurrentDeviation});
         sharedSpaceShip->SetRotation(sVECTOR3D{0.0f, CurrentDeviation / 2.0f, 0.0f});
 
-        vw_SetViewport((GLint)((GameConfig().InternalWidth / 2 - 512) * (tmpViewportWidth / GameConfig().InternalWidth)),
+        vw_SetViewport(0,
                        0,
-                       (GLsizei)(1024 * (tmpViewportWidth / GameConfig().InternalWidth)),
+                       (GLsizei)(768 * (tmpViewportWidth / GameConfig().InternalWidth)),
                        (GLsizei)(768 * (tmpViewportHeight / GameConfig().InternalHeight)));
-        vw_ResizeScene(45.0f, 1024.0f/768.0f, 1.0f, 2000.0f);
+        vw_ResizeScene(45.0f, 1.0f, 1.0f, 2000.0f);
         vw_Clear(RI_DEPTH_BUFFER);
 
         vw_LoadIdentity();
@@ -564,11 +564,11 @@ void WorkshopDrawShip(std::weak_ptr<cSpaceShip> &SpaceShip, int Mode)
     if (Mode == 4) {
         WorkShopPointCamera = sVECTOR3D{0.0f, 35.0f, -0.01f};
         sharedSpaceShip->SetRotation(sVECTOR3D{0.0f, 0.0f, CurrentDeviation});
-        vw_SetViewport((GLint)((GameConfig().InternalWidth / 2) * (tmpViewportWidth / GameConfig().InternalWidth)),
+        vw_SetViewport((GLint)(384 * (tmpViewportWidth / GameConfig().InternalWidth)),
                        (GLint)(30 * (tmpViewportHeight / GameConfig().InternalHeight)),
-                       (GLsizei)(512 * (tmpViewportWidth / GameConfig().InternalWidth)),
-                       (GLsizei)(638 * (tmpViewportHeight / GameConfig().InternalHeight)));
-        vw_ResizeScene(45.0f, 512.0f/608.0f, 1.0f, 2000.0f);
+                       (GLsizei)(384 * (tmpViewportWidth / GameConfig().InternalWidth)),
+                       (GLsizei)(478 * (tmpViewportHeight / GameConfig().InternalHeight)));
+        vw_ResizeScene(45.0f, 384.0f/478.0f, 1.0f, 2000.0f);
         vw_Clear(RI_DEPTH_BUFFER);
         vw_LoadIdentity();
         vw_SetCameraLocation(sVECTOR3D{WorkShopPointCamera.x + 1000.0f,
@@ -628,11 +628,11 @@ void WorkshopDrawShip(std::weak_ptr<cSpaceShip> &SpaceShip, int Mode)
     if (Mode == 3) {
         WorkShopPointCamera = sVECTOR3D{0.0f, 10.0f, -34.0f};
         sharedSpaceShip->SetRotation(sVECTOR3D{0.0f, CurrentDeviation / 2.0f, 0.0f});
-        vw_SetViewport((GLint)((GameConfig().InternalWidth / 2) * (tmpViewportWidth / GameConfig().InternalWidth)),
+        vw_SetViewport((GLint)(384 * (tmpViewportWidth / GameConfig().InternalWidth)),
                        0,
-                       (GLsizei)(512 * (tmpViewportWidth / GameConfig().InternalWidth)),
-                       (GLsizei)(512 * (tmpViewportHeight / GameConfig().InternalHeight)));
-        vw_ResizeScene(45.0f, 512.0f/512.0f, 1.0f, 2000.0f);
+                       (GLsizei)(384 * (tmpViewportWidth / GameConfig().InternalWidth)),
+                       (GLsizei)(384 * (tmpViewportHeight / GameConfig().InternalHeight)));
+        vw_ResizeScene(45.0f, 1.0f, 1.0f, 2000.0f);
         vw_Clear(RI_DEPTH_BUFFER);
         vw_LoadIdentity();
         vw_SetCameraLocation(sVECTOR3D{WorkShopPointCamera.x / 1.2f + 1000.0f,
@@ -645,11 +645,11 @@ void WorkshopDrawShip(std::weak_ptr<cSpaceShip> &SpaceShip, int Mode)
         sVECTOR3D PointCameraTMP = WorkShopPointCamera;
         vw_RotatePoint(PointCameraTMP, sVECTOR3D{0.0f, -90.0f, 0.0f});
         sharedSpaceShip->SetRotation(sVECTOR3D{0.0f, CurrentDeviation / 2.0f, 0.0f});
-        vw_SetViewport((GLint)((GameConfig().InternalWidth / 2 - 512) * (tmpViewportWidth / GameConfig().InternalWidth)),
+        vw_SetViewport(0,
                        0,
-                       (GLsizei)(512 * (tmpViewportWidth / GameConfig().InternalWidth)),
-                       (GLsizei)(512 * (tmpViewportHeight / GameConfig().InternalHeight)));
-        vw_ResizeScene(45.0f, 512.0f/512.0f, 1.0f, 2000.0f);
+                       (GLsizei)(384 * (tmpViewportWidth / GameConfig().InternalWidth)),
+                       (GLsizei)(384 * (tmpViewportHeight / GameConfig().InternalHeight)));
+        vw_ResizeScene(45.0f, 1.0f, 1.0f, 2000.0f);
         vw_Clear(RI_DEPTH_BUFFER);
         vw_LoadIdentity();
         vw_SetCameraLocation(sVECTOR3D{PointCameraTMP.x / 1.2f + 2000.0f,
@@ -724,11 +724,11 @@ void WorkshopDrawWeapon(cWeapon *Weapon)
     vw_RotatePoint(PointCameraTMP, sVECTOR3D{0.0f, -90.0f, 0.0f});
 
     Weapon->SetRotation(sVECTOR3D{0.0f, CurrentDeviation / 2.0f, 0.0f});
-    vw_SetViewport((GLint)((GameConfig().InternalWidth / 2 - 448) * (tmpViewportWidth / GameConfig().InternalWidth)),
+    vw_SetViewport((GLint)(96 * (tmpViewportWidth / GameConfig().InternalWidth)),
                    (GLint)(105 * (tmpViewportHeight / GameConfig().InternalHeight)),
-                   (GLsizei)(384 * (tmpViewportWidth / GameConfig().InternalWidth)),
-                   (GLsizei)(350 * (tmpViewportHeight / GameConfig().InternalHeight)));
-    vw_ResizeScene(45.0f, 384.0f/350.0f, 1.0f, 2000.0f);
+                   (GLsizei)(288 * (tmpViewportWidth / GameConfig().InternalWidth)),
+                   (GLsizei)(263 * (tmpViewportHeight / GameConfig().InternalHeight)));
+    vw_ResizeScene(45.0f, 288.0f/263.0f, 1.0f, 2000.0f);
     vw_Clear(RI_DEPTH_BUFFER);
     vw_LoadIdentity();
     vw_SetCameraLocation(sVECTOR3D{PointCameraTMP.x + 3000.0f,

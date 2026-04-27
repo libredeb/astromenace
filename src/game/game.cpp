@@ -109,7 +109,7 @@ float AsteroidsKillBonus;
 bool GameMissionCompleteStatus = false;
 bool GameMissionCompleteStatusShowDialog = false;
 
-// player ship "holder" variable
+// player ship "holder" veriable
 std::weak_ptr<cSpaceShip> PlayerFighter{};
 
 
@@ -147,7 +147,7 @@ extern int LastMouseY;
 extern int LastMouseXR;
 extern int LastMouseYR;
 
-// shield and deflector "holder" variables
+// shield and deflector "holder" veriables
 extern std::weak_ptr<cParticleSystem> Shild1;
 extern std::weak_ptr<cParticleSystem> Shild2;
 
@@ -200,7 +200,7 @@ void InitGame()
 
     GameExperience = (GameConfig().Profile[CurrentProfile].Experience - GameConfig().Profile[CurrentProfile].ByMissionExperience[CurrentMission]) * 1.0f;
 
-    // grab mouse control for both - windows and fullscreen mode (need this for multi-monitor systems)
+    // grab mouse control for both - windows and fullscren mode (need this for multi-monitor systems)
     SDL_SetWindowGrab(reinterpret_cast<SDL_Window*>(vw_GetSDLWindow()), SDL_TRUE);
 
 
@@ -547,7 +547,7 @@ void DrawGame()
             NeedHideGameMenu = false;
             GameMenuStatus = eGameMenuStatus::GAME_MENU;
 
-            // grab mouse control for both - windows and fullscreen mode (need this for multi-monitor systems)
+            // grab mouse control for both - windows and fullscren mode (need this for multi-monitor systems)
             SDL_SetWindowGrab(reinterpret_cast<SDL_Window*>(vw_GetSDLWindow()), SDL_TRUE);
             SDL_WarpMouseInWindow(reinterpret_cast<SDL_Window*>(vw_GetSDLWindow()), LastMouseXR, LastMouseYR);
         }

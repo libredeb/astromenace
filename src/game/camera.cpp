@@ -29,7 +29,7 @@
 
 /*
 
-OpenGL uses right-handed coordinate system. Scene axes orientation:
+OpenGL use right-handed coordinate system. Scene axises orientation:
 
      ^ Y
      |
@@ -67,7 +67,7 @@ float CameraLastUpdate{0.0f};
 float CameraSpeed{10.0f};
 sVECTOR3D CameraCoveredDistance{0.0f, 0.0f, 0.0f};
 sVECTOR3D CameraMovementDirection{0.0f, 0.0f, 1.0f};
-// camera shake on explosion related variables
+// camera shake on explosion related vaiables
 float CameraCurrentShake{0.0f};
 float CameraNeedShake{0.0f};
 float CameraShakeTimeLeft{0.0f};

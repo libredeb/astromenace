@@ -113,8 +113,8 @@ void InitMenu(eMenuStatus NewMenuStatus)
     float tmpViewportWidth, tmpViewportHeight;
     vw_GetViewport(nullptr, nullptr, &tmpViewportWidth, &tmpViewportHeight);
     SDL_WarpMouseInWindow(reinterpret_cast<SDL_Window*>(vw_GetSDLWindow()),
-                          static_cast<int>((512.0f + 256.0f) / (GameConfig().InternalWidth / tmpViewportWidth)),
-                          static_cast<int>(384.0f / (GameConfig().InternalHeight / tmpViewportHeight)));
+                          static_cast<int>((GameConfig().InternalWidth / 2.0f) / (GameConfig().InternalWidth / tmpViewportWidth)),
+                          static_cast<int>((GameConfig().InternalHeight / 2.0f) / (GameConfig().InternalHeight / tmpViewportHeight)));
 
 
 
@@ -448,12 +448,14 @@ void DrawMenu()
 
 
 
-    // draw AstroMenace title
+    // draw AstroMenace title (scaled to fit square screen)
     vw_Start2DMode(-1,1);
     sRECT SrcRect, DstRect;
-    SrcRect(0,0,863,128 );
-    int StartX = (GameConfig().InternalWidth - 863)/2;
-    DstRect(StartX,10,StartX+863,10+128);
+    SrcRect(0,0,863,128);
+    constexpr int TitleW = 700;
+    constexpr int TitleH = 104;
+    int StartX = (GameConfig().InternalWidth - TitleW) / 2;
+    DstRect(StartX, 10, StartX + TitleW, 10 + TitleH);
 
     if (MenuStatus != eMenuStatus::WORKSHOP
         && MenuStatus != eMenuStatus::INTERFACE

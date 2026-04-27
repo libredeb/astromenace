@@ -226,62 +226,21 @@ void OptionsMenu(float ContentTransp, float &ButtonTransp1, float &LastButtonUpd
 
     Y1 += Prir1;
     vw_DrawTextUTF32(X1, Y1, -280, 0, 1.0f, sRGBCOLOR{eRGBCOLOR::white}, ContentTransp, vw_GetTextUTF32("Full Screen"));
-    if (DrawButton128_2(X1+300, Y1-6, vw_GetTextUTF32("Off"), ContentTransp, DetectWindowSizeArray().empty() || !Options_Fullscreen)
-        || DrawButton128_2(X1+616, Y1-6, vw_GetTextUTF32("On"), ContentTransp, DetectFullscreenSize().empty() || Options_Fullscreen)) {
-        Options_Fullscreen = !Options_Fullscreen;
-        if (Options_Fullscreen) {
-            Options_Width = DetectFullscreenSize().back().Width;
-            Options_Height = DetectFullscreenSize().back().Height;
-        } else {
-            // if current mode is windowed, restore to current window size
-            if (!GameConfig().Fullscreen) {
-                Options_Width = GameConfig().Width;
-                Options_Height = GameConfig().Height;
-            } else {
-                Options_Width = DetectWindowSizeArray().back().Width;
-                Options_Height = DetectWindowSizeArray().back().Height;
-            }
-        }
-    }
-    int Size = vw_TextWidthUTF32(Options_Fullscreen ? vw_GetTextUTF32("On") : vw_GetTextUTF32("Off"));
+    DrawButton128_2(X1+300, Y1-6, vw_GetTextUTF32("Off"), ContentTransp, true);
+    DrawButton128_2(X1+616, Y1-6, vw_GetTextUTF32("On"), ContentTransp, true);
+    int Size = vw_TextWidthUTF32(vw_GetTextUTF32("On"));
     int SizeI = (170-Size)/2;
-    vw_DrawTextUTF32(X1+438+SizeI, Y1, 0, 0, 1.0f, sRGBCOLOR{eRGBCOLOR::white}, ContentTransp, Options_Fullscreen ? vw_GetTextUTF32("On") : vw_GetTextUTF32("Off"));
+    vw_DrawTextUTF32(X1+438+SizeI, Y1, 0, 0, 1.0f, sRGBCOLOR{eRGBCOLOR::white}, ContentTransp, vw_GetTextUTF32("On"));
 
 
 
 
     Y1 += Prir1;
     vw_DrawTextUTF32(X1, Y1, -280, 0, 1.0f, sRGBCOLOR{eRGBCOLOR::white}, ContentTransp, vw_GetTextUTF32("Window Size"));
-    if (DrawButton128_2(X1+300, Y1-6, vw_GetTextUTF32("Prev"), ContentTransp, DetectWindowSizeArray().empty() || Options_Fullscreen)) {
-        auto iter = std::find(DetectWindowSizeArray().cbegin(),
-                              DetectWindowSizeArray().cend(),
-                              sViewSize{Options_Width, Options_Height});
-        // we don't check iter, since we check array and this window size before, so,
-        // we know for sure, that the iter is not equal DetectWindowSizeArray().cend()
-        if (iter == DetectWindowSizeArray().cbegin()) {
-            iter = DetectWindowSizeArray().cend();
-        }
-        --iter;
+    DrawButton128_2(X1+300, Y1-6, vw_GetTextUTF32("Prev"), ContentTransp, true);
+    DrawButton128_2(X1+616, Y1-6, vw_GetTextUTF32("Next"), ContentTransp, true);
 
-        Options_Width = iter->Width;
-        Options_Height = iter->Height;
-    }
-    if (DrawButton128_2(X1+616, Y1-6, vw_GetTextUTF32("Next"), ContentTransp, DetectWindowSizeArray().empty() || Options_Fullscreen)) {
-        auto iter = std::find(DetectWindowSizeArray().cbegin(),
-                              DetectWindowSizeArray().cend(),
-                              sViewSize{Options_Width, Options_Height});
-        // we don't check iter, since we check array and this window size before, so,
-        // we know for sure, that the iter is not equal DetectWindowSizeArray().cend()
-        ++iter;
-        if (iter == DetectWindowSizeArray().cend()) {
-            iter = DetectWindowSizeArray().cbegin();
-        }
-
-        Options_Width = iter->Width;
-        Options_Height = iter->Height;
-    }
-
-    std::string VideoModeTitle{std::to_string(Options_Width) + "x" + std::to_string(Options_Height)};
+    std::string VideoModeTitle{"720x720"};
     Size = vw_TextWidth(VideoModeTitle);
     SizeI = (170-Size)/2;
     vw_DrawText(X1+438+SizeI, Y1, 0, 0, 1.0f, sRGBCOLOR{eRGBCOLOR::white}, ContentTransp, VideoModeTitle);

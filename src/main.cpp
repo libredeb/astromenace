@@ -77,62 +77,14 @@ void RecreateGameWindow()
 
 /*
  * Initial setup on first start and video configuration check.
+ * Hardcoded for Hyperpixel 4.0 (720x720) fullscreen.
  */
 static bool VideoConfig(bool FirstStart)
 {
-    // prevent out of range index usage
-    if (GameConfig().DisplayIndex) {
-        int tmpDisplaysCount = SDL_GetNumVideoDisplays();
-        if (tmpDisplaysCount >= 1) {
-            if (GameConfig().DisplayIndex >= tmpDisplaysCount) {
-                ChangeGameConfig().DisplayIndex = 0; // fallback to first display
-            }
-        } else {
-            std::cerr << __func__ << "(): " << "SDL_GetNumVideoDisplays() failed: " << SDL_GetError() << "\n";
-        }
-
-        ChangeDisplayIndex(GameConfig().DisplayIndex);
-    }
-
-    // check both arrays (with corrected display index), we need at least one non empty array
-    if (DetectFullscreenSize().empty() && DetectWindowSizeArray().empty()) {
-        std::cerr << __func__ << "(): " << "display does not support any appropriate screen resolutions.\n";
-        return false;
-    }
-
-    if (FirstStart) {
-        if (!DetectFullscreenSize().empty()) {
-            ChangeGameConfig().Width = DetectFullscreenSize().back().Width;
-            ChangeGameConfig().Height = DetectFullscreenSize().back().Height;
-            ChangeGameConfig().Fullscreen = true;
-        } else { // we don't check DetectWindowSizeArray(), since we check it above
-            ChangeGameConfig().Width = DetectWindowSizeArray().back().Width;
-            ChangeGameConfig().Height = DetectWindowSizeArray().back().Height;
-            ChangeGameConfig().Fullscreen = false;
-        }
-        return true;
-    }
-
-    // check config's mode, note, we need check only one array here, since we know,
-    // if one is empty, second is not empty (we check this above)
-    if (GameConfig().Fullscreen && DetectFullscreenSize().empty()) {
-        ChangeGameConfig().Fullscreen = false;
-    } else if (!GameConfig().Fullscreen && DetectWindowSizeArray().empty()) {
-        ChangeGameConfig().Fullscreen = true;
-    }
-
-    // in case of Fullscreen we don't really care about saved Width and Height,
-    // since we need current display size for sure
-    if (GameConfig().Fullscreen) {
-        ChangeGameConfig().Width = DetectFullscreenSize().back().Width;
-        ChangeGameConfig().Height = DetectFullscreenSize().back().Height;
-    } else if (std::find(DetectWindowSizeArray().cbegin(),
-                         DetectWindowSizeArray().cend(),
-                         sViewSize{GameConfig().Width, GameConfig().Height}) == DetectWindowSizeArray().cend()) {
-        ChangeGameConfig().Width = DetectWindowSizeArray().back().Width;
-        ChangeGameConfig().Height = DetectWindowSizeArray().back().Height;
-    }
-
+    ChangeGameConfig().Width = 720;
+    ChangeGameConfig().Height = 720;
+    ChangeGameConfig().Fullscreen = true;
+    ChangeGameConfig().DisplayIndex = 0;
     return true;
 }
 

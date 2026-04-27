@@ -637,17 +637,11 @@ void GamePlayerShip()
 
 
 
-        // calculate end point of movement
+        // calculate end point of movement (tuned for 768x768 square view)
         sVECTOR3D PlayerFighterEndLocation;
-        if (GameConfig().InternalWidth == 1024.0f) {
-            PlayerFighterEndLocation = sVECTOR3D{-(73.15f-sharedPlayerFighter->Width/2.0f+MoveFB*(20.05f-sharedPlayerFighter->Length/6.0f))*MoveLR,
-                                                 0.0f,
-                                                 (46.0f-sharedPlayerFighter->Length/2.0f)*MoveFB};
-        } else {
-            PlayerFighterEndLocation = sVECTOR3D{-(70.0f-sharedPlayerFighter->Width/2.0f+MoveFB*(23.2f-sharedPlayerFighter->Length/6.0f))*MoveLR,
-                                                 0.0f,
-                                                 (46.0f-sharedPlayerFighter->Length/2.0f)*MoveFB};
-        }
+        PlayerFighterEndLocation = sVECTOR3D{-(55.0f-sharedPlayerFighter->Width/2.0f+MoveFB*(15.0f-sharedPlayerFighter->Length/6.0f))*MoveLR,
+                                             0.0f,
+                                             (46.0f-sharedPlayerFighter->Length/2.0f)*MoveFB};
 
         PlayerFighterEndLocation += GetCameraCoveredDistance();
 
@@ -747,39 +741,21 @@ void GamePlayerShip()
 
 
 
-        // in case "standard" AspectRatio, care about camera movement too
-        // in this case camera "move" left-right inside more wide size of widescreen view
-        //
-        //   widescreen view
-        //   [    <- [standard view] ->        ]
-        //   [       [             ]           ]
-        //   [       [             ]           ]
-        //   [       [             ]           ]
-        //
-        if (GameConfig().InternalWidth == 1024.0f) {
-            float DeviationSize = 14.55f;
-
-            if (sharedPlayerFighter->Location.x < 0.0f) {
-                float Diff = sharedPlayerFighter->Location.x / 3.5f;
-                if (Diff < -DeviationSize) {
-                    Diff = -DeviationSize;
-                }
-
-                sVECTOR3D TMPCameraLocation;
-                vw_GetCameraLocation(&TMPCameraLocation);
-                TMPCameraLocation.x = Diff;
-                vw_SetCameraLocation(TMPCameraLocation);
-            } else {
-                float Diff = sharedPlayerFighter->Location.x / 3.5f;
-                if (Diff > DeviationSize) {
-                    Diff = DeviationSize;
-                }
-
-                sVECTOR3D TMPCameraLocation;
-                vw_GetCameraLocation(&TMPCameraLocation);
-                TMPCameraLocation.x = Diff;
-                vw_SetCameraLocation(TMPCameraLocation);
+        // camera tracks player horizontally for the narrow square view
+        {
+            float DeviationSize = 18.0f;
+            float Diff = sharedPlayerFighter->Location.x / 3.0f;
+            if (Diff < -DeviationSize) {
+                Diff = -DeviationSize;
             }
+            if (Diff > DeviationSize) {
+                Diff = DeviationSize;
+            }
+
+            sVECTOR3D TMPCameraLocation;
+            vw_GetCameraLocation(&TMPCameraLocation);
+            TMPCameraLocation.x = Diff;
+            vw_SetCameraLocation(TMPCameraLocation);
         }
 
     }

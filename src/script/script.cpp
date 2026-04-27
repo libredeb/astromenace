@@ -27,15 +27,15 @@
 
 // TODO "AsteroidField" should be moved to separate sources (gfx?)
 
-// TODO "MissionCompleteAtNoEnemy" related code should be moved to appropriate code (game?)
+// TODO "MissionCompleteAtNoEnemy" related code should be moved to propriate code (game?)
 
 // NOTE in future, use make_unique() to make unique_ptr-s (since C++14)
 
 /*
-OpenGL uses right-handed coordinate system, that should be used in scripts
+OpenGL use right-handed coordinate system, that should be used in scripts
 for object positioning too.
 
-Scene axes orientation:
+Scene axises orientation:
 
      ^ Y
      |
@@ -539,7 +539,7 @@ bool cMissionScript::Update(float Time)
             }
 
             if (!SetGameMissionFlag) {
-                // if no flags set up, act as "MissionComplete"
+                // if no flags setted up, act as "MissionComplete"
                 SetGameMissionComplete();
             } else {
                 LastTimeMissionComplete = Time;

@@ -43,7 +43,7 @@ FindTargetAndInterceptCourse(eObjectStatus MissileObjectStatus, const sVECTOR3D 
 bool CorrectTargetInterceptCourse(const sVECTOR3D &MissileLocation, const sVECTOR3D &MissileRotation,
                                   const float (&MissileRotationMatrix)[9],
                                   std::weak_ptr<cObject3D> &Target, sVECTOR3D &NeedAngle);
-// Check locked by missile target.
+// Check locked by missle target.
 bool CheckMissileTarget(std::weak_ptr<cObject3D> &Target, const sVECTOR3D &MissileLocation,
                         const float (&MissileRotationMatrix)[9]);
 // Get closest target to mine.

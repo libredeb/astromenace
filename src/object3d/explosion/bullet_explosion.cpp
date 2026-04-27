@@ -191,14 +191,14 @@ cBulletExplosion::cBulletExplosion(const cObject3D *Object, cProjectile &Project
 
     switch (ExplType) {
     // negative - self destruct
-    case -16: // missile
-    case -17: // missile
-    case -18: // missile
-    case -19: // missile
-    case -205: // pirate missile
-    case -206: // pirate missile
-    case -209: // pirate missile
-    case -210: // pirate missile
+    case -16: // missle
+    case -17: // missle
+    case -18: // missle
+    case -19: // missle
+    case -205: // pirate missle
+    case -206: // pirate missle
+    case -209: // pirate missle
+    case -210: // pirate missle
     case -214: // pirate mine 1
     case -215: // pirate mine 2
     case -216: // pirate mine 3

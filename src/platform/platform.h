@@ -115,6 +115,8 @@ const std::vector<sViewSize> &DetectFullscreenSize();
 const std::vector<sViewSize> &DetectWindowSizeArray();
 // Change index of the display to query.
 void ChangeDisplayIndex(int NewDisplayIndex);
+// Check for square aspect ratio (1:1).
+bool SquareAspectRatio(const sViewSize &ViewSize);
 // Check for standard aspect ratio.
 bool StandardAspectRation(const sViewSize &ViewSize);
 

@@ -1611,11 +1611,11 @@ void InformationDrawObject()
     float tmpViewportX, tmpViewportY, tmpViewportWidth, tmpViewportHeight;
     vw_GetViewport(&tmpViewportX, &tmpViewportY, &tmpViewportWidth, &tmpViewportHeight);
 
-    vw_SetViewport((GLint)((GameConfig().InternalWidth / 2 - 432) * (tmpViewportWidth / GameConfig().InternalWidth)),
+    vw_SetViewport((GLint)(51 * (tmpViewportWidth / GameConfig().InternalWidth)),
                    (GLint)(160 * (tmpViewportHeight / GameConfig().InternalHeight)),
-                   (GLsizei)(444 * (tmpViewportWidth / GameConfig().InternalWidth)),
-                   (GLsizei)(333 * (tmpViewportHeight / GameConfig().InternalHeight)));
-    vw_ResizeScene(45.0f, 444.0f / 333.0f, 1.0f, 2000.0f);
+                   (GLsizei)(333 * (tmpViewportWidth / GameConfig().InternalWidth)),
+                   (GLsizei)(250 * (tmpViewportHeight / GameConfig().InternalHeight)));
+    vw_ResizeScene(45.0f, 333.0f / 250.0f, 1.0f, 2000.0f);
     vw_Clear(RI_DEPTH_BUFFER);
 
 

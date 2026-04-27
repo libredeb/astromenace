@@ -384,7 +384,7 @@ void Workshop_Workshop()
 
 
     SrcRect(0,0,210,600);
-    DstRect(GameConfig().InternalWidth/2-492, 50-10, GameConfig().InternalWidth/2-492+210, 50+600-10);
+    DstRect(GameConfig().InternalWidth/2-364, 50-10, GameConfig().InternalWidth/2-364+210, 50+600-10);
     constexpr unsigned tmpHash2 = constexpr_hash_djb2a("menu/workshop_panel2.tga");
     vw_Draw2D(DstRect, SrcRect, GetPreloadedTextureAsset(tmpHash2), true, MenuContentTransp);
 
@@ -395,7 +395,7 @@ void Workshop_Workshop()
     float Current = 0.4f;
 
     SrcRect(0,0,128,128);
-    DstRect(GameConfig().InternalWidth/2-451, 60, GameConfig().InternalWidth/2-451+128, 60+128);
+    DstRect(GameConfig().InternalWidth/2-323, 60, GameConfig().InternalWidth/2-323+128, 60+128);
     if (vw_MouseOverRect(DstRect) && !isDialogBoxDrawing()) {
         if (NeedPlayWorkshopOnButtonSoundX != DstRect.left || NeedPlayWorkshopOnButtonSoundY != DstRect.top) {
             PlayMenuSFX(eMenuSFX::OverBigButton, 1.0f);
@@ -434,7 +434,7 @@ void Workshop_Workshop()
     Current = 0.4f;
 
     SrcRect(0,0,128,128);
-    DstRect(GameConfig().InternalWidth/2-451, 200, GameConfig().InternalWidth/2-451+128, 200+128);
+    DstRect(GameConfig().InternalWidth/2-323, 200, GameConfig().InternalWidth/2-323+128, 200+128);
     if (vw_MouseOverRect(DstRect) && !isDialogBoxDrawing()) {
         if (NeedPlayWorkshopOnButtonSoundX != DstRect.left
             || NeedPlayWorkshopOnButtonSoundY != DstRect.top) {
@@ -475,7 +475,7 @@ void Workshop_Workshop()
     Current = 0.4f;
 
     SrcRect(0,0,128,128);
-    DstRect(GameConfig().InternalWidth/2-451, 340, GameConfig().InternalWidth/2-451+128, 340+128);
+    DstRect(GameConfig().InternalWidth/2-323, 340, GameConfig().InternalWidth/2-323+128, 340+128);
     if (vw_MouseOverRect(DstRect) && !isDialogBoxDrawing()) {
         if (NeedPlayWorkshopOnButtonSoundX != DstRect.left
             || NeedPlayWorkshopOnButtonSoundY != DstRect.top) {
@@ -515,7 +515,7 @@ void Workshop_Workshop()
     Current = 0.4f;
 
     SrcRect(0,0,128,128);
-    DstRect(GameConfig().InternalWidth/2-451, 610-128, GameConfig().InternalWidth/2-451+128, 610);
+    DstRect(GameConfig().InternalWidth/2-323, 610-128, GameConfig().InternalWidth/2-323+128, 610);
     if (vw_MouseOverRect(DstRect) && !isDialogBoxDrawing()) {
         if (NeedPlayWorkshopOnButtonSoundX != DstRect.left
             || NeedPlayWorkshopOnButtonSoundY != DstRect.top) {
@@ -552,7 +552,7 @@ void Workshop_Workshop()
 
 
     vw_SetFontSize(24);
-    vw_DrawTextUTF32(GameConfig().InternalWidth/2-475, 630, 0, 0, 1.0f, sRGBCOLOR{eRGBCOLOR::white}, MenuContentTransp, vw_GetTextUTF32("System Stock"));
+    vw_DrawTextUTF32(GameConfig().InternalWidth/2-347, 630, 0, 0, 1.0f, sRGBCOLOR{eRGBCOLOR::white}, MenuContentTransp, vw_GetTextUTF32("System Stock"));
     ResetFontSize();
 
 
@@ -567,7 +567,7 @@ void Workshop_Workshop()
 
 
     SrcRect(0,0,210,600);
-    DstRect(GameConfig().InternalWidth/2+282, 50-10, GameConfig().InternalWidth/2+492, 50+600-10);
+    DstRect(GameConfig().InternalWidth/2+174, 50-10, GameConfig().InternalWidth/2+384, 50+600-10);
     constexpr unsigned tmpHash3 = constexpr_hash_djb2a("menu/workshop_panel2+.tga");
     vw_Draw2D(DstRect, SrcRect, GetPreloadedTextureAsset(tmpHash3), true, MenuContentTransp);
 
@@ -628,7 +628,7 @@ void Workshop_Workshop()
     bool CanBuy = true;
 
     // Engine
-    DstRect(GameConfig().InternalWidth/2+337, 70, GameConfig().InternalWidth/2+437, 70+100);
+    DstRect(GameConfig().InternalWidth/2+284, 70, GameConfig().InternalWidth/2+384, 70+100);
 
     if (CurrentSystemStockNum >= 1 && CurrentSystemStockNum <= 4) {
         if (GameConfig().Profile[CurrentProfile].EngineSystem != 0) {
@@ -646,7 +646,7 @@ void Workshop_Workshop()
 
 
     // Power
-    DstRect(GameConfig().InternalWidth/2+337, 180, GameConfig().InternalWidth/2+437, 180+100);
+    DstRect(GameConfig().InternalWidth/2+284, 180, GameConfig().InternalWidth/2+384, 180+100);
 
     if (CurrentSystemStockNum >= 5 && CurrentSystemStockNum <= 8) {
         if (GameConfig().Profile[CurrentProfile].PowerSystem != 0) {
@@ -663,7 +663,7 @@ void Workshop_Workshop()
     }
 
     // Target
-    DstRect(GameConfig().InternalWidth/2+337, 290, GameConfig().InternalWidth/2+437, 290+100);
+    DstRect(GameConfig().InternalWidth/2+284, 290, GameConfig().InternalWidth/2+384, 290+100);
 
     if (CurrentSystemStockNum >= 9 && CurrentSystemStockNum <= 12) {
         if (GameConfig().Profile[CurrentProfile].TargetingSystem != 0) {
@@ -681,7 +681,7 @@ void Workshop_Workshop()
 
 
     // Mech
-    DstRect(GameConfig().InternalWidth/2+337, 400, GameConfig().InternalWidth/2+437, 400+100);
+    DstRect(GameConfig().InternalWidth/2+284, 400, GameConfig().InternalWidth/2+384, 400+100);
     if (CurrentSystemStockNum >= 13 && CurrentSystemStockNum <= 16) {
         if (GameConfig().Profile[CurrentProfile].TargetingMechanicSystem != 0) {
             CanSell = true;
@@ -697,7 +697,7 @@ void Workshop_Workshop()
     }
 
     // Protect
-    DstRect(GameConfig().InternalWidth/2+337, 510, GameConfig().InternalWidth/2+437, 510+100);
+    DstRect(GameConfig().InternalWidth/2+284, 510, GameConfig().InternalWidth/2+384, 510+100);
     if (CurrentSystemStockNum >= 17 && CurrentSystemStockNum <= 20) {
         if (GameConfig().Profile[CurrentProfile].AdvancedProtectionSystem != 0) {
             CanSell = true;
@@ -719,7 +719,7 @@ void Workshop_Workshop()
 
     // Engine
     SrcRect(0,0,128,128);
-    DstRect(GameConfig().InternalWidth/2+337, 70, GameConfig().InternalWidth/2+437, 70+100);
+    DstRect(GameConfig().InternalWidth/2+284, 70, GameConfig().InternalWidth/2+384, 70+100);
     Current = 0.5f;
     sRGBCOLOR tmpColor{sRGBCOLOR{eRGBCOLOR::white}};
 
@@ -796,7 +796,7 @@ void Workshop_Workshop()
 
 
     // Power
-    DstRect(GameConfig().InternalWidth/2+337, 180, GameConfig().InternalWidth/2+437, 180+100);
+    DstRect(GameConfig().InternalWidth/2+284, 180, GameConfig().InternalWidth/2+384, 180+100);
     tmpColor = sRGBCOLOR{eRGBCOLOR::white};
 
     if (NeedMoreEnergy)
@@ -867,7 +867,7 @@ void Workshop_Workshop()
 
 
     // Target
-    DstRect(GameConfig().InternalWidth/2+337, 290, GameConfig().InternalWidth/2+437, 290+100);
+    DstRect(GameConfig().InternalWidth/2+284, 290, GameConfig().InternalWidth/2+384, 290+100);
     tmpColor = sRGBCOLOR{eRGBCOLOR::white};
 
     Current = 0.5f;
@@ -935,7 +935,7 @@ void Workshop_Workshop()
 
 
     // Mech
-    DstRect(GameConfig().InternalWidth/2+337, 400, GameConfig().InternalWidth/2+437, 400+100);
+    DstRect(GameConfig().InternalWidth/2+284, 400, GameConfig().InternalWidth/2+384, 400+100);
     tmpColor = sRGBCOLOR{eRGBCOLOR::white};
 
     Current = 0.5f;
@@ -1004,7 +1004,7 @@ void Workshop_Workshop()
 
 
     // Protect
-    DstRect(GameConfig().InternalWidth/2+337, 510, GameConfig().InternalWidth/2+437, 510+100);
+    DstRect(GameConfig().InternalWidth/2+284, 510, GameConfig().InternalWidth/2+384, 510+100);
     tmpColor = sRGBCOLOR{eRGBCOLOR::white};
 
     if (NeedMoreEnergy && (GameConfig().Profile[CurrentProfile].AdvancedProtectionSystem != 0))
@@ -1077,7 +1077,7 @@ void Workshop_Workshop()
 
 
     vw_SetFontSize(24);
-    vw_DrawTextUTF32(GameConfig().InternalWidth/2+475-vw_TextWidthUTF32(vw_GetTextUTF32("Installed Systems")), 630, 0, 0, 1.0f, sRGBCOLOR{eRGBCOLOR::white}, MenuContentTransp, vw_GetTextUTF32("Installed Systems"));
+    vw_DrawTextUTF32(GameConfig().InternalWidth/2+347-vw_TextWidthUTF32(vw_GetTextUTF32("Installed Systems")), 630, 0, 0, 1.0f, sRGBCOLOR{eRGBCOLOR::white}, MenuContentTransp, vw_GetTextUTF32("Installed Systems"));
     ResetFontSize();
 
     // current system
@@ -1133,7 +1133,7 @@ void Workshop_Workshop()
         BuyCurrentSystem();
     }
     // buy at double click on icon
-    DstRect(GameConfig().InternalWidth/2-451, 55+128+20, GameConfig().InternalWidth/2-451+128, 55+128+128+20);
+    DstRect(GameConfig().InternalWidth/2-323, 55+128+20, GameConfig().InternalWidth/2-323+128, 55+128+128+20);
     if (vw_MouseOverRect(DstRect) && !isDialogBoxDrawing() && CanBuy && vw_GetMouseLeftDoubleClick(true)) {
         BuyCurrentSystem();
     }

@@ -667,6 +667,10 @@ void ShipSlotSetupWeapon(int SlotNum)
 
     SrcRect(0,0,404,570);
     int Xpos = GameConfig().InternalWidth / 2 + 55;
+    if (Xpos + 404 > GameConfig().InternalWidth) {
+        Xpos = GameConfig().InternalWidth - 404;
+    }
+    int const rightSetupPanelX = Xpos;
     int Ypos = 50-10;
     DstRect(Xpos,Ypos,Xpos+404,Ypos+570);
     constexpr unsigned tmpHash1 = constexpr_hash_djb2a("menu/workshop_panel5.tga");
@@ -677,12 +681,12 @@ void ShipSlotSetupWeapon(int SlotNum)
     if (auto sharedWeapon = sharedWorkshopFighterGame->WeaponSlots[SlotNum].Weapon.lock()) {
         Ypos += 33;
         // draw ammo status
-        Xpos = GameConfig().InternalWidth / 2 + 55 + 50;
+        Xpos = rightSetupPanelX + 50;
         vw_DrawTextUTF32(Xpos, Ypos, -170, 0, 1.0f, sRGBCOLOR{eRGBCOLOR::white}, MenuContentTransp, vw_GetTextUTF32("Weapon Ammo:"));
         std::ostringstream tmpStream;
         tmpStream << std::fixed << std::setprecision(0)
                   << sharedWeapon->Ammo << "/" << sharedWeapon->AmmoStart;
-        Xpos = (GameConfig().InternalWidth/2+512)-55 - 50 - vw_TextWidth(tmpStream.str());
+        Xpos = GameConfig().InternalWidth - 55 - 50 - vw_TextWidth(tmpStream.str());
 
 
         // in case some issue - start blinking
@@ -696,7 +700,7 @@ void ShipSlotSetupWeapon(int SlotNum)
 
 
         // reload cost
-        Xpos = GameConfig().InternalWidth / 2 + 55 + 50;
+        Xpos = rightSetupPanelX + 50;
         Ypos += 30;
         vw_DrawTextUTF32(Xpos, Ypos, -230, 0, 1.0f, sRGBCOLOR{eRGBCOLOR::white}, MenuContentTransp, vw_GetTextUTF32("Weapon Reload Cost:"));
         int ReloadCost = GetWeaponReloadCost(sharedWeapon->InternalType,
@@ -707,7 +711,7 @@ void ShipSlotSetupWeapon(int SlotNum)
         tmpStream.clear();
         tmpStream.str(std::string{});
         tmpStream << ReloadCost;
-        Xpos = (GameConfig().InternalWidth/2+512)-55 - 50 - vw_TextWidth(tmpStream.str());
+        Xpos = GameConfig().InternalWidth - 55 - 50 - vw_TextWidth(tmpStream.str());
         if (ReloadCost != 0) {
             tmpTransp = MenuContentTransp * CurrentAlert3;
             tmpColor = sRGBCOLOR{eRGBCOLOR::orange};
@@ -717,7 +721,7 @@ void ShipSlotSetupWeapon(int SlotNum)
 
         // reload button
         Ypos += 40;
-        if (DrawButton200_2(GameConfig().InternalWidth / 2 + 155, Ypos, vw_GetTextUTF32("Reload"), MenuContentTransp, (ReloadCost == 0) || GameConfig().Profile[CurrentProfile].Money<ReloadCost)) {
+        if (DrawButton200_2(rightSetupPanelX + 100, Ypos, vw_GetTextUTF32("Reload"), MenuContentTransp, (ReloadCost == 0) || GameConfig().Profile[CurrentProfile].Money<ReloadCost)) {
             sharedWeapon->Ammo = sharedWeapon->AmmoStart;
             ChangeGameConfig().Profile[CurrentProfile].WeaponAmmo[SlotNum] = sharedWeapon->Ammo;
             ChangeGameConfig().Profile[CurrentProfile].Money -= ReloadCost;
@@ -730,7 +734,7 @@ void ShipSlotSetupWeapon(int SlotNum)
         bool Status1 = false;
         bool Status2 = false;
 
-        Xpos = GameConfig().InternalWidth/2+55+34 + 16;
+        Xpos = rightSetupPanelX+34 + 16;
         Ypos += 60;
         vw_DrawTextUTF32(Xpos, Ypos, -300, 0, 1.0f, sRGBCOLOR{eRGBCOLOR::white}, MenuContentTransp, vw_GetTextUTF32("Weapon Fire Control:"));
         // primary control
@@ -738,7 +742,7 @@ void ShipSlotSetupWeapon(int SlotNum)
             || GameConfig().Profile[CurrentProfile].WeaponControl[SlotNum] == 3) {
             Status1 = true;
         }
-        Xpos = GameConfig().InternalWidth/2+55+54 + 16;
+        Xpos = rightSetupPanelX+54 + 16;
         Ypos += 30;
         DrawCheckBox(Xpos,Ypos, Status1, vw_GetTextUTF32("Primary Attack"), MenuContentTransp);
         // secondary control
@@ -746,7 +750,7 @@ void ShipSlotSetupWeapon(int SlotNum)
             || GameConfig().Profile[CurrentProfile].WeaponControl[SlotNum] == 3) {
             Status2 = true;
         }
-        Xpos = GameConfig().InternalWidth/2+55+54 + 16;
+        Xpos = rightSetupPanelX+54 + 16;
         Ypos += 40;
         DrawCheckBox(Xpos,Ypos, Status2, vw_GetTextUTF32("Secondary Attack"), MenuContentTransp);
         // get data back
@@ -759,7 +763,7 @@ void ShipSlotSetupWeapon(int SlotNum)
         }
 
         // configure custom control
-        Xpos = GameConfig().InternalWidth/2+55+34 + 16;
+        Xpos = rightSetupPanelX+34 + 16;
         Ypos += 40;
         vw_DrawTextUTF32(Xpos, Ypos, -300, 0, 1.0f, sRGBCOLOR{eRGBCOLOR::white}, MenuContentTransp, vw_GetTextUTF32("Alternative Fire Control:"));
 
@@ -796,7 +800,7 @@ void ShipSlotSetupWeapon(int SlotNum)
             Transp = But[1];
             Off = true;
         }
-        if (DrawButton200_2(GameConfig().InternalWidth / 2+155, Ypos, ConvertUTF8.from_bytes(TextTmp), Transp * MenuContentTransp, Off)) {
+        if (DrawButton200_2(rightSetupPanelX + 100, Ypos, ConvertUTF8.from_bytes(TextTmp), Transp * MenuContentTransp, Off)) {
             NeedCheck = 100;
             vw_ResetMouseButtons();
             NewWeaponControlType = 0;
@@ -807,7 +811,7 @@ void ShipSlotSetupWeapon(int SlotNum)
 
         if (GameConfig().Profile[CurrentProfile].Weapon[SlotNum] < 16) {
 
-            Xpos = GameConfig().InternalWidth/2+55+34 + 16;
+            Xpos = rightSetupPanelX+34 + 16;
             Ypos += 60;
             tmpStream.clear();
             tmpStream.str(std::string{});
@@ -826,7 +830,7 @@ void ShipSlotSetupWeapon(int SlotNum)
                 vw_DrawTextUTF32(Xpos, Ypos+5, 300, 0, 1.0f, sRGBCOLOR{eRGBCOLOR::orange}, 1.0f, vw_GetTextUTF32("ful with optical computer"));
                 vw_DrawTextUTF32(Xpos, Ypos+25, 300, 0, 1.0f, sRGBCOLOR{eRGBCOLOR::orange}, 1.0f, vw_GetTextUTF32("system Neo or Supra only."));
             } else {
-                if (DrawButton128_2(GameConfig().InternalWidth/2+118, Ypos, vw_GetTextUTF32("Left"), MenuContentTransp, GameConfig().Profile[CurrentProfile].WeaponSlotYAngle[SlotNum] <= Min)) {
+                if (DrawButton128_2(rightSetupPanelX + 63, Ypos, vw_GetTextUTF32("Left"), MenuContentTransp, GameConfig().Profile[CurrentProfile].WeaponSlotYAngle[SlotNum] <= Min)) {
                     ChangeGameConfig().Profile[CurrentProfile].WeaponSlotYAngle[SlotNum] -= 5.0f;
                     sharedWorkshopFighterGame->WeaponSlots[SlotNum].YAngle = -GameConfig().Profile[CurrentProfile].WeaponSlotYAngle[SlotNum];
 
@@ -835,7 +839,7 @@ void ShipSlotSetupWeapon(int SlotNum)
                     NeedAngle.y += sharedWorkshopFighterGame->WeaponSlots[SlotNum].YAngle;
                     sharedWeapon->SetRotation(NeedAngle);
                 }
-                if (DrawButton128_2(GameConfig().InternalWidth/2+266, Ypos, vw_GetTextUTF32("Right"), MenuContentTransp, GameConfig().Profile[CurrentProfile].WeaponSlotYAngle[SlotNum] >= Max)) {
+                if (DrawButton128_2(rightSetupPanelX + 211, Ypos, vw_GetTextUTF32("Right"), MenuContentTransp, GameConfig().Profile[CurrentProfile].WeaponSlotYAngle[SlotNum] >= Max)) {
                     ChangeGameConfig().Profile[CurrentProfile].WeaponSlotYAngle[SlotNum] += 5.0f;
                     sharedWorkshopFighterGame->WeaponSlots[SlotNum].YAngle = -GameConfig().Profile[CurrentProfile].WeaponSlotYAngle[SlotNum];
 
@@ -869,7 +873,7 @@ void ShipSlotSetupWeapon(int SlotNum)
 
 
     // drag-and-drop
-    Xpos = GameConfig().InternalWidth / 2 + 55;
+    Xpos = rightSetupPanelX;
     Ypos = 50-10;
     DstRect(Xpos+10,Ypos+10,Xpos+404-10,Ypos+570-10);
     if (vw_MouseOverRect(DstRect) && !isDialogBoxDrawing()) {
@@ -951,7 +955,7 @@ void ShipSlotSetupWeapon(int SlotNum)
 
 
     // "Close" button
-    if (DrawButton200_2(GameConfig().InternalWidth / 2 + 155, 533, vw_GetTextUTF32("Close"), MenuContentTransp, false)) {
+    if (DrawButton200_2(rightSetupPanelX + 100, 533, vw_GetTextUTF32("Close"), MenuContentTransp, false)) {
         WeaponSetupSlot = -1;
         NeedCheck = 0;
     }
@@ -1029,7 +1033,7 @@ static void DrawWeaponSlots(std::weak_ptr<cSpaceShip> &SpaceShip)
 
     for (unsigned i = 0; i < Lines.size(); i++) {
         int tmpStartX{static_cast<int>(GameConfig().InternalWidth / 2) + 50};
-        int tmpOffsetX{512 - 128 - 100};
+        int tmpOffsetX{384 - 128 - 100};
         if (Lines[i].size() == 1)
             tmpStartX = GameConfig().InternalWidth / 2 + 256 - 64;
 
@@ -1084,8 +1088,15 @@ void Workshop_Weaponry()
         return;
     }
 
+    int const leftWpnShopX = (GameConfig().InternalWidth/2 > 438) ? (GameConfig().InternalWidth/2 - 438) : 8;
+    int const leftWpnPanelX = (GameConfig().InternalWidth/2 > 457) ? (GameConfig().InternalWidth/2 - 457) : 4;
+    int const backSpot2LeftX = (GameConfig().InternalWidth/2 > 480) ? (GameConfig().InternalWidth/2 - 480) : 0;
+    int const shopDragLeftX = (GameConfig().InternalWidth/2 > 416) ? (GameConfig().InternalWidth/2 - 416) : 0;
+    int const btn128ShopPrevX = (GameConfig().InternalWidth/2 > 395) ? (GameConfig().InternalWidth/2 - 395) : 4;
+    int const leftWpnStockX = (GameConfig().InternalWidth/2 > 445) ? (GameConfig().InternalWidth/2 - 445) : 8;
+
     // start weapon dragging from shopfront
-    DstRect(GameConfig().InternalWidth/2-416, 100+32, GameConfig().InternalWidth/2-96, 450-32);
+    DstRect(shopDragLeftX, 100+32, GameConfig().InternalWidth/2-96, 450-32);
     if (vw_MouseOverRect(DstRect) && !isDialogBoxDrawing() && !DragWeapon) {
         SetCursorStatus(eCursorStatus::ActionAllowed);
 
@@ -1111,10 +1122,10 @@ void Workshop_Weaponry()
 
 
     SrcRect(0,0,256,256);
-    DstRect(GameConfig().InternalWidth/2-480, 100-32, GameConfig().InternalWidth/2-32, 450+32);
+    DstRect(backSpot2LeftX, 100-32, GameConfig().InternalWidth/2-32, 450+32);
     constexpr unsigned tmpHash1 = constexpr_hash_djb2a("menu/back_spot2.tga");
     vw_Draw2D(DstRect, SrcRect, GetPreloadedTextureAsset(tmpHash1), true, 0.45f * MenuContentTransp);
-    DstRect(GameConfig().InternalWidth / 2, 0, GameConfig().InternalWidth/2+512, 622);
+    DstRect(GameConfig().InternalWidth / 2, 0, GameConfig().InternalWidth/2+384, 622);
     constexpr unsigned tmpHash2 = constexpr_hash_djb2a("menu/back_spot.tga");
     vw_Draw2D(DstRect, SrcRect, GetPreloadedTextureAsset(tmpHash2), true, 0.35f * MenuContentTransp);
 
@@ -1126,7 +1137,7 @@ void Workshop_Weaponry()
 
 
     // current weapon name in shopfront
-    vw_DrawTextUTF32(GameConfig().InternalWidth/2-438, 50+6, 0, 0, 1.0f, sRGBCOLOR{eRGBCOLOR::yellow}, MenuContentTransp, vw_GetTextUTF32(GetWeaponName(CurrentWorkshopNewWeapon)));
+    vw_DrawTextUTF32(leftWpnShopX, 50+6, 0, 0, 1.0f, sRGBCOLOR{eRGBCOLOR::yellow}, MenuContentTransp, vw_GetTextUTF32(GetWeaponName(CurrentWorkshopNewWeapon)));
     if (DrawButton128_2(GameConfig().InternalWidth/2-197, 50, vw_GetTextUTF32("Info"), MenuContentTransp, false)) {
         SetCurrentDialogBox(eDialogBox::ShowWeaponsInfo);
         DialogWeapon = sharedWorkshopNewWeapon.get();
@@ -1135,13 +1146,13 @@ void Workshop_Weaponry()
     std::ostringstream tmpStream;
     tmpStream << std::fixed << std::setprecision(0)
               << vw_GetText("Weapon Type") << ": ";
-    vw_DrawText(GameConfig().InternalWidth/2-438, 110, -170, 0, 1.0f, sRGBCOLOR{eRGBCOLOR::white}, MenuContentTransp, tmpStream.str());
-    vw_DrawTextUTF32(GameConfig().InternalWidth/2-438+175, 110, -184, 0, 1.0f, sRGBCOLOR{eRGBCOLOR::white}, MenuContentTransp, vw_GetTextUTF32(GetWeaponGroupTitle(CurrentWorkshopNewWeapon)));
+    vw_DrawText(leftWpnShopX, 110, -170, 0, 1.0f, sRGBCOLOR{eRGBCOLOR::white}, MenuContentTransp, tmpStream.str());
+    vw_DrawTextUTF32(leftWpnShopX+175, 110, -184, 0, 1.0f, sRGBCOLOR{eRGBCOLOR::white}, MenuContentTransp, vw_GetTextUTF32(GetWeaponGroupTitle(CurrentWorkshopNewWeapon)));
 
 
     int k2 = 0;
     if (GetProjectileDamageKinetic(sharedWorkshopNewWeapon->InternalType) > 0.0f) {
-        vw_DrawTextUTF32(GameConfig().InternalWidth/2-438, 130, -170, 0, 1.0f, sRGBCOLOR{eRGBCOLOR::white}, MenuContentTransp, vw_GetTextUTF32("Damage, Kinetic:"));
+        vw_DrawTextUTF32(leftWpnShopX, 130, -170, 0, 1.0f, sRGBCOLOR{eRGBCOLOR::white}, MenuContentTransp, vw_GetTextUTF32("Damage, Kinetic:"));
         tmpStream.clear();
         tmpStream.str(std::string{});
         tmpStream << GetProjectileDamageKinetic(sharedWorkshopNewWeapon->InternalType) << " ";
@@ -1152,12 +1163,12 @@ void Workshop_Weaponry()
         } else {
             tmpStream << vw_GetText("units/shot");
         }
-        vw_DrawText(GameConfig().InternalWidth/2-438+175, 130, -184, 0, 1.0f, sRGBCOLOR{eRGBCOLOR::white}, MenuContentTransp, tmpStream.str());
+        vw_DrawText(leftWpnShopX+175, 130, -184, 0, 1.0f, sRGBCOLOR{eRGBCOLOR::white}, MenuContentTransp, tmpStream.str());
 
         k2=20;
     }
     if (GetProjectileDamageEM(sharedWorkshopNewWeapon->InternalType) > 0.0f) {
-        vw_DrawTextUTF32(GameConfig().InternalWidth/2-438, 130+k2, -170, 0, 1.0f, sRGBCOLOR{eRGBCOLOR::white}, MenuContentTransp, vw_GetTextUTF32("Damage, EM:"));
+        vw_DrawTextUTF32(leftWpnShopX, 130+k2, -170, 0, 1.0f, sRGBCOLOR{eRGBCOLOR::white}, MenuContentTransp, vw_GetTextUTF32("Damage, EM:"));
         tmpStream.clear();
         tmpStream.str(std::string{});
         tmpStream << GetProjectileDamageEM(sharedWorkshopNewWeapon->InternalType) << " ";
@@ -1168,7 +1179,7 @@ void Workshop_Weaponry()
         } else {
             tmpStream << vw_GetText("units/shot");
         }
-        vw_DrawText(GameConfig().InternalWidth/2-438+175, 130+k2, -184, 0, 1.0f, sRGBCOLOR{eRGBCOLOR::white}, MenuContentTransp, tmpStream.str());
+        vw_DrawText(leftWpnShopX+175, 130+k2, -184, 0, 1.0f, sRGBCOLOR{eRGBCOLOR::white}, MenuContentTransp, tmpStream.str());
 
     }
 
@@ -1184,7 +1195,7 @@ void Workshop_Weaponry()
         tmpTransp = MenuContentTransp * CurrentAlert3;
         tmpColor = sRGBCOLOR{eRGBCOLOR::orange};
     }
-    vw_DrawText(GameConfig().InternalWidth/2-438, 400, 0, 0, 1.0f, tmpColor, tmpTransp, tmpStream.str());
+    vw_DrawText(leftWpnShopX, 400, 0, 0, 1.0f, tmpColor, tmpTransp, tmpStream.str());
 
     // current weapon cost in shopfront
     tmpTransp = MenuContentTransp;
@@ -1196,18 +1207,18 @@ void Workshop_Weaponry()
         tmpTransp = MenuContentTransp * CurrentAlert3;
         tmpColor = sRGBCOLOR{eRGBCOLOR::red};
     }
-    vw_DrawText(GameConfig().InternalWidth/2-438, 420, 0, 0, 1.0f, tmpColor, tmpTransp, tmpStream.str());
+    vw_DrawText(leftWpnShopX, 420, 0, 0, 1.0f, tmpColor, tmpTransp, tmpStream.str());
 
 
 
     // borders
     SrcRect(0,0,400,35 );
-    DstRect(GameConfig().InternalWidth/2-457, 100-11, GameConfig().InternalWidth/2-57, 100+35-11);
+    DstRect(leftWpnPanelX, 100-11, leftWpnPanelX+400, 100+35-11);
     constexpr unsigned tmpHash3 = constexpr_hash_djb2a("menu/workshop_panel4.tga");
     vw_Draw2D(DstRect, SrcRect, GetPreloadedTextureAsset(tmpHash3), true, MenuContentTransp);
 
     SrcRect(0,0,400,173 );
-    DstRect(GameConfig().InternalWidth/2-457, 450-13, GameConfig().InternalWidth/2-57, 450+173-13);
+    DstRect(leftWpnPanelX, 450-13, leftWpnPanelX+400, 450+173-13);
     constexpr unsigned tmpHash4 = constexpr_hash_djb2a("menu/workshop_panel1.tga");
     vw_Draw2D(DstRect, SrcRect, GetPreloadedTextureAsset(tmpHash4), true, MenuContentTransp);
 
@@ -1216,7 +1227,7 @@ void Workshop_Weaponry()
 
 
     // check mouse wheel
-    DstRect(GameConfig().InternalWidth/2-457, 100+35-11, GameConfig().InternalWidth/2-57, 450-13);
+    DstRect(leftWpnPanelX, 100+35-11, leftWpnPanelX+400, 450-13);
     if (vw_MouseOverRect(DstRect)) {
         if ((vw_GetWheelStatus() != 0) && !isDialogBoxDrawing()) {
             CurrentWorkshopNewWeapon += vw_GetWheelStatus();
@@ -1236,7 +1247,7 @@ void Workshop_Weaponry()
     }
 
 
-    if (DrawButton128_2(GameConfig().InternalWidth/2-395,482, vw_GetTextUTF32("Prev"), MenuContentTransp, false)) {
+    if (DrawButton128_2(btn128ShopPrevX,482, vw_GetTextUTF32("Prev"), MenuContentTransp, false)) {
         CurrentWorkshopNewWeapon--;
         if (CurrentWorkshopNewWeapon < 1) {
             CurrentWorkshopNewWeapon = 19;
@@ -1252,7 +1263,7 @@ void Workshop_Weaponry()
     }
 
 
-    if (DrawButton128_2(GameConfig().InternalWidth/2-395,533, vw_GetTextUTF32(GetWeaponGroupTitle(PrevWeaponGroup())), MenuContentTransp, false)) {
+    if (DrawButton128_2(btn128ShopPrevX,533, vw_GetTextUTF32(GetWeaponGroupTitle(PrevWeaponGroup())), MenuContentTransp, false)) {
         CurrentWorkshopNewWeapon = PrevWeaponGroup();
         WorkshopCreateNewWeapon();
     }
@@ -1262,7 +1273,7 @@ void Workshop_Weaponry()
     }
 
     vw_SetFontSize(24);
-    vw_DrawTextUTF32(GameConfig().InternalWidth/2-445, 600, 0, 0, 1.0f, sRGBCOLOR{eRGBCOLOR::white}, MenuContentTransp, vw_GetTextUTF32("Weapon Stock"));
+    vw_DrawTextUTF32(leftWpnStockX, 600, 0, 0, 1.0f, sRGBCOLOR{eRGBCOLOR::white}, MenuContentTransp, vw_GetTextUTF32("Weapon Stock"));
     ResetFontSize();
 
     if (WeaponSetupSlot == -1) {
@@ -1299,7 +1310,7 @@ void Workshop_Weaponry()
     }
 
     vw_SetFontSize(24);
-    vw_DrawTextUTF32(GameConfig().InternalWidth/2+445-vw_TextWidthUTF32(vw_GetTextUTF32("Installed Weapons")), 600, 0, 0, 1.0f, sRGBCOLOR{eRGBCOLOR::white}, MenuContentTransp, vw_GetTextUTF32("Installed Weapons"));
+    vw_DrawTextUTF32(GameConfig().InternalWidth-8-vw_TextWidthUTF32(vw_GetTextUTF32("Installed Weapons")), 600, 0, 0, 1.0f, sRGBCOLOR{eRGBCOLOR::white}, MenuContentTransp, vw_GetTextUTF32("Installed Weapons"));
     ResetFontSize();
 
     vw_SetFontSize(20);

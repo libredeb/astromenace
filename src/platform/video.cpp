@@ -86,6 +86,15 @@ void ChangeDisplayIndex(int NewDisplayIndex)
 }
 
 /*
+ * Check for square aspect ratio (1:1).
+ */
+bool SquareAspectRatio(const sViewSize &ViewSize)
+{
+    float tmpAspectRatio = static_cast<float>(ViewSize.Width) / static_cast<float>(ViewSize.Height);
+    return (tmpAspectRatio > 0.95f && tmpAspectRatio < 1.05f);
+}
+
+/*
  * Check for standard aspect ratio.
  */
 bool StandardAspectRation(const sViewSize &ViewSize)
@@ -104,9 +113,12 @@ bool StandardAspectRation(const sViewSize &ViewSize)
  */
 static bool AllowedAspectRatio(const sViewSize &ViewSize)
 {
+    if (SquareAspectRatio(ViewSize)) {
+        return true;
+    }
+
     float tmpAspectRatio = static_cast<float>(ViewSize.Width) / static_cast<float>(ViewSize.Height);
 
-    // only aspect ratio from 5:4 to 16:9 are allowed
     if (tmpAspectRatio > 1.24f && tmpAspectRatio < 1.78f) {
         return true;
     }
@@ -194,6 +206,7 @@ const std::vector<sViewSize> &DetectWindowSizeArray()
     // we need array of "well known" sizes, so, I did not find anything better,
     // than use more or less popular resolutions as default array
     static const std::vector<sViewSize> DefaultWindowSizeArray{
+        sViewSize{720, 720},
         sViewSize{640, 480},
         sViewSize{768, 480},
         sViewSize{800, 480},

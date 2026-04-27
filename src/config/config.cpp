@@ -123,13 +123,8 @@ sGameConfig &ChangeGameConfig()
  */
 void ConfigVirtualInternalResolution()
 {
-    if (StandardAspectRation(sViewSize{GameConfig().Width, GameConfig().Height})) {
-        ChangeGameConfig().InternalWidth = config::VirtualWidth_Standard;
-        ChangeGameConfig().InternalHeight = config::VirtualHeight_Standard;
-    } else {
-        ChangeGameConfig().InternalWidth = config::VirtualWidth_Wide;
-        ChangeGameConfig().InternalHeight = config::VirtualHeight_Wide;
-    }
+    ChangeGameConfig().InternalWidth = config::VirtualWidth_Square;
+    ChangeGameConfig().InternalHeight = config::VirtualHeight_Square;
     vw_SetInternalResolution(GameConfig().InternalWidth, GameConfig().InternalHeight, true);
 }
 

@@ -55,11 +55,11 @@ const char *ArcadeSim[2] = {
 void DifficultyMenu()
 {
     sRECT SrcRect(2, 2, 861, 482);
-    sRECT DstRect(GameConfig().InternalWidth / 2 - 427, 160, GameConfig().InternalWidth / 2 + 432, 160 + 480);
+    sRECT DstRect(4, 160, 764, 160 + 480);
     constexpr unsigned tmpHash = constexpr_hash_djb2a("menu/panel800_444_back.tga");
     vw_Draw2D(DstRect, SrcRect, GetPreloadedTextureAsset(tmpHash), true, 0.9f * MenuContentTransp);
 
-    int X1 = GameConfig().InternalWidth / 2 - 372;
+    int X1 = 12;
     int Y1 = 217;
     int Prir1 = 50;
     int Size;

@@ -63,7 +63,7 @@ void vw_Start2DMode(GLdouble zNear, GLdouble zFar)
     float tmpInternalWidth{0.0f};
     float tmpInternalHeight{0.0f};
 
-    // care about fixed internal resolution, that could be set up
+    // care about fixed internal resolution, that could be setted up
     // change origin to upper left corner
     if (vw_GetInternalResolution(&tmpInternalWidth, &tmpInternalHeight)) {
         glOrtho(tmpViewportX * tmpInternalWidth / tmpViewportWidth,
