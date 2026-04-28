@@ -178,6 +178,7 @@ struct sGameConfig {
     int JoystickSecondary{1};
     int JoystickNum{0};
     int JoystickDeadZone{2};
+    int JoystickMenu{7};    // button index that opens the pause/exit menu (acts as ESC)
 
     float GameSpeed{1.5f};
     bool ShowFPS{false};

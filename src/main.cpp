@@ -250,11 +250,20 @@ static void Loop()
                 // only events from opened joystick could be here, no checks are needed
                 vw_SetMouseLeftClick(true);
                 SetJoystickButton(event.jbutton.button, true);
+                // JoystickMenu button acts as ESC: opens/closes the pause or exit menu
+                if (GameConfig().JoystickMenu >= 0
+                    && event.jbutton.button == static_cast<Uint8>(GameConfig().JoystickMenu)) {
+                    vw_KeyStatusUpdate(SDLK_ESCAPE, true);
+                }
                 break;
             case SDL_JOYBUTTONUP:
                 // only events from opened joystick could be here, no checks are needed
                 vw_SetMouseLeftClick(false);
                 SetJoystickButton(event.jbutton.button, false);
+                if (GameConfig().JoystickMenu >= 0
+                    && event.jbutton.button == static_cast<Uint8>(GameConfig().JoystickMenu)) {
+                    vw_KeyStatusUpdate(SDLK_ESCAPE, false);
+                }
                 break;
             case SDL_JOYDEVICEADDED:
             case SDL_JOYDEVICEREMOVED:

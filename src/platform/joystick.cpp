@@ -171,6 +171,8 @@ bool GetJoystickButton(int ButtonNumber)
 
 /*
  * Emulate mouse movements.
+ * Reads axes 0/1 (analog stick or d-pad-as-axes) and hat 0 (d-pad-as-hat) as fallback,
+ * so the cursor moves correctly regardless of how the controller maps the d-pad.
  */
 void JoystickEmulateMouseMovement(float Time)
 {
@@ -194,6 +196,16 @@ void JoystickEmulateMouseMovement(float Time)
         Y = 0;
     }
 
+    // If axes are idle and the controller has a hat (d-pad as hat, e.g. 8BitDo in X-Input mode),
+    // use the hat to drive cursor movement at full deflection speed.
+    if (X == 0 && Y == 0 && SDL_JoystickNumHats(Joystick) > 0) {
+        Uint8 hat = SDL_JoystickGetHat(Joystick, 0);
+        if (hat & SDL_HAT_LEFT)  X = -32767;
+        if (hat & SDL_HAT_RIGHT) X =  32767;
+        if (hat & SDL_HAT_UP)    Y = -32767;
+        if (hat & SDL_HAT_DOWN)  Y =  32767;
+    }
+
     if (JoystickAxisX != X || JoystickAxisY != Y) {
         JoystickAxisX = 0;
         JoystickAxisY = 0;
@@ -204,6 +216,49 @@ void JoystickEmulateMouseMovement(float Time)
 
         vw_SetMousePosRel(Xsm, Ysm);
     }
+}
+
+/*
+ * Get normalized movement axes for direct ship control.
+ * Reads axes 0/1 with dead zone applied; falls back to hat 0 if both axes are idle.
+ * Returns true and sets X/Y in range [-1, 1] when any direction is active.
+ * This bypasses the cursor-accumulation pipeline, so the ship keeps moving even
+ * when the virtual cursor is clamped at the viewport boundary.
+ */
+bool GetJoystickMovementAxes(float &X, float &Y)
+{
+    X = 0.0f;
+    Y = 0.0f;
+
+    if (!Joystick) {
+        return false;
+    }
+
+    int rawX = SDL_JoystickGetAxis(Joystick, 0);
+    int rawY = SDL_JoystickGetAxis(Joystick, 1);
+
+    if (abs(rawX) < GameConfig().JoystickDeadZone * 3000) {
+        rawX = 0;
+    }
+    if (abs(rawY) < GameConfig().JoystickDeadZone * 3000) {
+        rawY = 0;
+    }
+
+    if (rawX == 0 && rawY == 0 && SDL_JoystickNumHats(Joystick) > 0) {
+        Uint8 hat = SDL_JoystickGetHat(Joystick, 0);
+        if (hat & SDL_HAT_LEFT)  rawX = -32767;
+        if (hat & SDL_HAT_RIGHT) rawX =  32767;
+        if (hat & SDL_HAT_UP)    rawY = -32767;
+        if (hat & SDL_HAT_DOWN)  rawY =  32767;
+    }
+
+    if (rawX == 0 && rawY == 0) {
+        return false;
+    }
+
+    X = rawX / 32767.0f;
+    Y = rawY / 32767.0f;
+    return true;
 }
 
 /*

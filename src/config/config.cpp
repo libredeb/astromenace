@@ -244,6 +244,7 @@ void SaveXMLConfigFile()
     XMLdoc->AddEntryAttribute(XMLdoc->AddEntry(*RootXMLEntry, "JoystickSecondary"), "value", Config.JoystickSecondary);
     XMLdoc->AddEntryAttribute(XMLdoc->AddEntry(*RootXMLEntry, "JoystickNum"), "value", Config.JoystickNum);
     XMLdoc->AddEntryAttribute(XMLdoc->AddEntry(*RootXMLEntry, "JoystickDeadZone"), "value", Config.JoystickDeadZone);
+    XMLdoc->AddEntryAttribute(XMLdoc->AddEntry(*RootXMLEntry, "JoystickMenu"), "value", Config.JoystickMenu);
     XMLdoc->AddEntryAttribute(XMLdoc->AddEntry(*RootXMLEntry, "ControlSensivity"), "value", Config.ControlSensivity);
     XMLdoc->AddEntryAttribute(XMLdoc->AddEntry(*RootXMLEntry, "MouseControl"), "value", Config.MouseControl);
     XMLdoc->AddEntryAttribute(XMLdoc->AddEntry(*RootXMLEntry, "LastProfile"), "value", Config.LastProfile);
@@ -553,6 +554,10 @@ bool LoadXMLConfigFile(bool NeedResetConfig)
     if (XMLdoc->FindEntryByName(*RootXMLEntry, "JoystickDeadZone")) {
         XMLdoc->iGetEntryAttribute(*XMLdoc->FindEntryByName(*RootXMLEntry, "JoystickDeadZone"), "value",
                                    Config.JoystickDeadZone);
+    }
+    if (XMLdoc->FindEntryByName(*RootXMLEntry, "JoystickMenu")) {
+        XMLdoc->iGetEntryAttribute(*XMLdoc->FindEntryByName(*RootXMLEntry, "JoystickMenu"), "value",
+                                   Config.JoystickMenu);
     }
     if (XMLdoc->FindEntryByName(*RootXMLEntry, "ControlSensivity")) {
         XMLdoc->iGetEntryAttribute(*XMLdoc->FindEntryByName(*RootXMLEntry, "ControlSensivity"), "value",

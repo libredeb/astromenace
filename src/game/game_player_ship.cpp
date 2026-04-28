@@ -614,6 +614,16 @@ void GamePlayerShip()
             if (vw_GetKeyStatus(GameConfig().KeyBoardRight)) {
                 MoveLR += 2.0f * (GameConfig().ControlSensivity / 10.0f) * sharedPlayerFighter->TimeDelta;
             }
+
+            // Direct joystick axis control: reads axes 0/1 (or hat 0 as fallback) bypassing
+            // the cursor-accumulation pipeline. This ensures continuous ship movement even when
+            // the virtual cursor is clamped at the viewport boundary.
+            float joyX = 0.0f, joyY = 0.0f;
+            if (GetJoystickMovementAxes(joyX, joyY)) {
+                float Koef = 0.9f + GameConfig().ControlSensivity / 10.0f;
+                MoveFB -= joyY * 2.0f * Koef * sharedPlayerFighter->TimeDelta;
+                MoveLR += joyX * 2.0f * Koef * sharedPlayerFighter->TimeDelta;
+            }
         }
 
 
