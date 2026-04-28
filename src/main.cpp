@@ -247,25 +247,35 @@ static void Loop()
                 }
                 break;
 
-            case SDL_JOYBUTTONDOWN:
+            case SDL_JOYBUTTONDOWN: {
                 // only events from opened joystick could be here, no checks are needed
                 vw_SetMouseLeftClick(true);
                 SetJoystickButton(event.jbutton.button, true);
-                // JoystickMenu button acts as ESC: opens/closes the pause or exit menu
-                if (GameConfig().JoystickMenu >= 0
-                    && event.jbutton.button == static_cast<Uint8>(GameConfig().JoystickMenu)) {
+                // Determine which button index opens the menu:
+                //   1. Name-based auto-detection (Arduino Leonardo → 18, 8BitDo → 11, etc.)
+                //   2. Fallback: GameConfig().JoystickMenu (user-configurable, default 7)
+                int menuButton = GetAutoDetectedMenuButton();
+                if (menuButton < 0) {
+                    menuButton = GameConfig().JoystickMenu;
+                }
+                if (menuButton >= 0 && event.jbutton.button == static_cast<Uint8>(menuButton)) {
                     vw_KeyStatusUpdate(SDLK_ESCAPE, true);
                 }
                 break;
-            case SDL_JOYBUTTONUP:
+            }
+            case SDL_JOYBUTTONUP: {
                 // only events from opened joystick could be here, no checks are needed
                 vw_SetMouseLeftClick(false);
                 SetJoystickButton(event.jbutton.button, false);
-                if (GameConfig().JoystickMenu >= 0
-                    && event.jbutton.button == static_cast<Uint8>(GameConfig().JoystickMenu)) {
+                int menuButton = GetAutoDetectedMenuButton();
+                if (menuButton < 0) {
+                    menuButton = GameConfig().JoystickMenu;
+                }
+                if (menuButton >= 0 && event.jbutton.button == static_cast<Uint8>(menuButton)) {
                     vw_KeyStatusUpdate(SDLK_ESCAPE, false);
                 }
                 break;
+            }
             case SDL_JOYDEVICEADDED:
             case SDL_JOYDEVICEREMOVED:
                 JoystickInit(vw_GetTimeThread(0));

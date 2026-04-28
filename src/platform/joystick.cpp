@@ -56,6 +56,10 @@ std::vector<bool> JoystickButtons{};
 float JoystickCurrentTime{0.0f};
 float JoystickTimeDelta{0.0f};
 
+// Menu/pause button index detected from joystick name (-1 = not detected).
+// Overrides GameConfig().JoystickMenu when >= 0.
+int AutoDetectedMenuButton{-1};
+
 } // unnamed namespace
 
 
@@ -101,6 +105,22 @@ bool JoystickInit(float InitialTime)
     JoystickButtonsQuantity = SDL_JoystickNumButtons(Joystick);
     JoystickButtons.resize(JoystickButtonsQuantity, false);
 
+    // Auto-detect the menu/pause button from the joystick name.
+    // This avoids relying on SDL_GameController database (which doesn't cover custom
+    // HID devices like the LLC Arduino Leonardo used in the console build).
+    AutoDetectedMenuButton = -1;
+    std::string name{SDL_JoystickName(Joystick)};
+    std::cout << "Joystick menu button auto-detection for: \"" << name << "\"\n";
+    if (name.find("Arduino") != std::string::npos
+        || name.find("Leonardo") != std::string::npos) {
+        // Custom console gamepad (LLC Arduino Leonardo): buttonpause = 18
+        AutoDetectedMenuButton = 18;
+    } else {
+        // 8BitDo Zero 2 and other gamepads: START is button 11 (observed)
+        AutoDetectedMenuButton = 11;
+    }
+    std::cout << "  → menu button index: " << AutoDetectedMenuButton << "\n\n";
+
     return true;
 }
 
@@ -119,6 +139,7 @@ void JoystickClose()
 
     Joystick = nullptr;
     JoystickButtons.clear();
+    AutoDetectedMenuButton = -1;
 }
 
 /*
@@ -259,6 +280,16 @@ bool GetJoystickMovementAxes(float &X, float &Y)
     X = rawX / 32767.0f;
     Y = rawY / 32767.0f;
     return true;
+}
+
+/*
+ * Return the auto-detected menu/pause button index for the current joystick (-1 if none).
+ * Detection is name-based so it works for custom HID devices (Arduino Leonardo, etc.)
+ * that are not in SDL's GameController database.
+ */
+int GetAutoDetectedMenuButton()
+{
+    return AutoDetectedMenuButton;
 }
 
 /*

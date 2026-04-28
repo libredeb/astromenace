@@ -86,6 +86,8 @@ void JoystickEmulateMouseMovement(float Time);
 // Get normalized movement axes (-1..1) from joystick axes 0/1 or hat 0 as fallback.
 // Returns true if any direction is active.
 bool GetJoystickMovementAxes(float &X, float &Y);
+// Return the auto-detected menu/pause button index (-1 if none).
+int GetAutoDetectedMenuButton();
 // Provide joystick button's name - "ButtonN", where N is number.
 std::string JoystickButtonName(int ButtonNum);
 
