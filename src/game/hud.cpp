@@ -295,7 +295,7 @@ static void DrawHUDBorder()
     }
 
     sRECT SrcRect{0, 0, 1024, 74};
-    sRECT DstRect{0, 0, 768, 74};
+    sRECT DstRect{0, 0, static_cast<int>(GameConfig().InternalWidth), 74};
     vw_Draw2D(DstRect, SrcRect, HUDBorderTexture, true, 1.0f);
 }
 
@@ -575,9 +575,22 @@ static void UpdateHUDProgressBars(std::weak_ptr<cSpaceShip> &SpaceShip, float En
 
     unsigned int tmpBufferPosition{0};
 
+    // Scale segment screen positions to match the HUD border scaling (texture native
+    // width → InternalWidth). Without this, segments drawn at raw texture coordinates
+    // fall outside the visible area on non-1024-wide virtual resolutions (e.g. 768px
+    // square for the HyperPixel 4.0).
+    float scaleX = (ProgressBarImageWidth > 0.0f)
+                   ? GameConfig().InternalWidth / ProgressBarImageWidth
+                   : 1.0f;
+
     for (int i = 0; i < LastFilledEnergySegment; i++) {
         sRECT SrcRect{67 + i * 20, 0, 85 + i * 20, 64};
-        sRECT DstRect = SrcRect;
+        sRECT DstRect{
+            static_cast<int>((67 + i * 20) * scaleX),
+            0,
+            static_cast<int>((85 + i * 20) * scaleX),
+            64
+        };
 
         float Transp = CurrentDrawEnergyStatus * ProgressBarSegmentCount - i;
         if (Transp > 1.0f) {
@@ -591,7 +604,12 @@ static void UpdateHUDProgressBars(std::weak_ptr<cSpaceShip> &SpaceShip, float En
 
     for (int i = 0; i < LastFilledArmorSegment; i++) {
         sRECT SrcRect(582 + i * 20, 0, 599 + i * 20, 64);
-        sRECT DstRect = SrcRect;
+        sRECT DstRect{
+            static_cast<int>((582 + i * 20) * scaleX),
+            0,
+            static_cast<int>((599 + i * 20) * scaleX),
+            64
+        };
 
         float Transp = CurrentDrawArmorStatus * ProgressBarSegmentCount - i;
         if (Transp > 1.0f) {
