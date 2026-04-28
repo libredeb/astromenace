@@ -200,6 +200,7 @@ static void Loop()
     NeedQuitFromLoop = false;
     NeedRecreateWindow = false;
     bool NeedPause{false};
+    SDL_GameController *GameController{nullptr};
 
     while (!NeedQuitFromLoop) {
         SDL_Event event;
@@ -270,6 +271,31 @@ static void Loop()
                 JoystickInit(vw_GetTimeThread(0));
                 break;
 
+            // GameController API provides semantic button names (e.g. START) regardless of
+            // the raw button index, which varies across 8BitDo modes and firmware versions.
+            case SDL_CONTROLLERDEVICEADDED:
+                if (GameController) {
+                    SDL_GameControllerClose(GameController);
+                }
+                GameController = SDL_GameControllerOpen(event.cdevice.which);
+                break;
+            case SDL_CONTROLLERDEVICEREMOVED:
+                if (GameController) {
+                    SDL_GameControllerClose(GameController);
+                    GameController = nullptr;
+                }
+                break;
+            case SDL_CONTROLLERBUTTONDOWN:
+                if (event.cbutton.button == SDL_CONTROLLER_BUTTON_START) {
+                    vw_KeyStatusUpdate(SDLK_ESCAPE, true);
+                }
+                break;
+            case SDL_CONTROLLERBUTTONUP:
+                if (event.cbutton.button == SDL_CONTROLLER_BUTTON_START) {
+                    vw_KeyStatusUpdate(SDLK_ESCAPE, false);
+                }
+                break;
+
             case SDL_WINDOWEVENT:
                 switch (event.window.event) {
                 case SDL_WINDOWEVENT_FOCUS_LOST:
@@ -327,6 +353,10 @@ static void Loop()
             SDL_WaitEvent(nullptr);
             vw_ResumeTimeThreads();
         }
+    }
+
+    if (GameController) {
+        SDL_GameControllerClose(GameController);
     }
 }
 
@@ -395,6 +425,7 @@ int main(int argc, char *argv[])
     Uint32 SDL_Init_Flags = SDL_INIT_TIMER |
                             SDL_INIT_EVENTS |
                             SDL_INIT_JOYSTICK |
+                            SDL_INIT_GAMECONTROLLER |
                             SDL_INIT_VIDEO;
 
     if (SDL_Init(SDL_Init_Flags) != 0) {
