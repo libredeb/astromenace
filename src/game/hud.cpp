@@ -104,7 +104,7 @@ static void InitHUDParticleSystems()
         sharedEnergyEmblem->CreationType = eParticle2DCreationType::Point;
         constexpr unsigned tmpHash = constexpr_hash_djb2a("gfx/flare1.tga");
         sharedEnergyEmblem->Texture = GetPreloadedTextureAsset(tmpHash);
-        sharedEnergyEmblem->MoveSystem(sVECTOR3D{33.0f, 29.0f, 0.0f});
+        sharedEnergyEmblem->MoveSystem(sVECTOR3D{33.0f * (GameConfig().InternalWidth / 1024.0f), 29.0f, 0.0f});
     }
 
     if (ArmorEmblemVert.expired()) {
@@ -129,7 +129,7 @@ static void InitHUDParticleSystems()
         sharedArmorEmblemVert->CreationSize(1.0f, 18.0f, 0.0f);
         constexpr unsigned tmpHash = constexpr_hash_djb2a("gfx/flare1.tga");
         sharedArmorEmblemVert->Texture = GetPreloadedTextureAsset(tmpHash);
-        sharedArmorEmblemVert->MoveSystem(sVECTOR3D{GameConfig().InternalWidth - 33.0f, 29.0f, 0.0f});
+        sharedArmorEmblemVert->MoveSystem(sVECTOR3D{GameConfig().InternalWidth - 33.0f * (GameConfig().InternalWidth / 1024.0f), 29.0f, 0.0f});
     }
 
     if (ArmorEmblemHoriz.expired()) {
@@ -154,7 +154,7 @@ static void InitHUDParticleSystems()
         sharedArmorEmblemHoriz->CreationSize(18.0f, 1.0f, 0.0f);
         constexpr unsigned tmpHash = constexpr_hash_djb2a("gfx/flare1.tga");
         sharedArmorEmblemHoriz->Texture = GetPreloadedTextureAsset(tmpHash);
-        sharedArmorEmblemHoriz->MoveSystem(sVECTOR3D{GameConfig().InternalWidth - 33.0f, 29.0f, 0.0f});
+        sharedArmorEmblemHoriz->MoveSystem(sVECTOR3D{GameConfig().InternalWidth - 33.0f * (GameConfig().InternalWidth / 1024.0f), 29.0f, 0.0f});
     }
 
     if (ArmorEmblemCircle.expired()) {
@@ -183,7 +183,7 @@ static void InitHUDParticleSystems()
         sharedArmorEmblemCircle->MagnetFactor = 25.0f;
         constexpr unsigned tmpHash = constexpr_hash_djb2a("gfx/flare.tga");
         sharedArmorEmblemCircle->Texture = GetPreloadedTextureAsset(tmpHash);
-        sharedArmorEmblemCircle->MoveSystem(sVECTOR3D{GameConfig().InternalWidth - 33.0f, 29.0f, 0.0f});
+        sharedArmorEmblemCircle->MoveSystem(sVECTOR3D{GameConfig().InternalWidth - 33.0f * (GameConfig().InternalWidth / 1024.0f), 29.0f, 0.0f});
         sharedArmorEmblemCircle->SetRotation(sVECTOR3D{0.0f, 0.0f, 90.0f});
     }
 }
@@ -263,16 +263,18 @@ static void DrawHUDParticleSystems()
  */
 static void ResizeHUDParticleSystems()
 {
+    float const scaledEmblemX = 33.0f * (GameConfig().InternalWidth / 1024.0f);
+
     if (auto sharedArmorEmblemVert = ArmorEmblemVert.lock()) {
-        sharedArmorEmblemVert->MoveSystem(sVECTOR3D{GameConfig().InternalWidth - 33.0f, 29.0f, 0.0f});
+        sharedArmorEmblemVert->MoveSystem(sVECTOR3D{GameConfig().InternalWidth - scaledEmblemX, 29.0f, 0.0f});
     }
 
     if (auto sharedArmorEmblemHoriz = ArmorEmblemHoriz.lock()) {
-        sharedArmorEmblemHoriz->MoveSystem(sVECTOR3D{GameConfig().InternalWidth - 33.0f, 29.0f, 0.0f});
+        sharedArmorEmblemHoriz->MoveSystem(sVECTOR3D{GameConfig().InternalWidth - scaledEmblemX, 29.0f, 0.0f});
     }
 
     if (auto sharedArmorEmblemCircle = ArmorEmblemCircle.lock()) {
-        sharedArmorEmblemCircle->MoveSystem(sVECTOR3D{GameConfig().InternalWidth - 33.0f, 29.0f, 0.0f});
+        sharedArmorEmblemCircle->MoveSystem(sVECTOR3D{GameConfig().InternalWidth - scaledEmblemX, 29.0f, 0.0f});
     }
 }
 
@@ -454,9 +456,13 @@ void SetupHUDText(const int Experience, const int Money)
     DrawBufferCurrentPosition = 0;
     float Transp{1.0f};
 
-    AddCharToDrawBuffer('E', GameConfig().InternalWidth / 2 - 57.0f, 5,
+    float const hudScaleX = GameConfig().InternalWidth / 1024.0f;
+    float const iconOffsetX = 57.0f * hudScaleX;
+    float const digitStartX = iconOffsetX - 23.0f * hudScaleX;
+
+    AddCharToDrawBuffer('E', GameConfig().InternalWidth / 2 - iconOffsetX, 5,
                         Transp, HUDFontImageWidth, HUDFontImageHeight);
-    AddCharToDrawBuffer('$', GameConfig().InternalWidth / 2 - 56.0f, 31,
+    AddCharToDrawBuffer('$', GameConfig().InternalWidth / 2 - iconOffsetX + 1.0f * hudScaleX, 31,
                         Transp, HUDFontImageWidth, HUDFontImageHeight);
 
     std::ostringstream tmpStream;
@@ -464,7 +470,7 @@ void SetupHUDText(const int Experience, const int Money)
               << std::setfill('0') << std::setw(7)
               << Experience;
     AddStringToDrawBuffer(tmpStream.str(),
-                          GameConfig().InternalWidth / 2 - 57 + 23.0f, 5,
+                          GameConfig().InternalWidth / 2 - digitStartX, 5,
                           HUDFontImageWidth, HUDFontImageHeight);
 
     tmpStream.clear();
@@ -472,7 +478,7 @@ void SetupHUDText(const int Experience, const int Money)
     tmpStream << std::setfill('0') << std::setw(7)
               << Money;
     AddStringToDrawBuffer(tmpStream.str(),
-                          GameConfig().InternalWidth / 2 - 57 + 23.0f, 31,
+                          GameConfig().InternalWidth / 2 - digitStartX, 31,
                           HUDFontImageWidth, HUDFontImageHeight);
 }
 

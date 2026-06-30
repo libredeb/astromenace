@@ -1137,6 +1137,18 @@ bool cSpaceShip::Update(float Time)
         SetLocation(Location + Velocity);
     }
 
+    if (ObjectType == eObjectType::AlienFighter
+        || ObjectType == eObjectType::AlienMotherShip
+        || ObjectType == eObjectType::PirateShip) {
+        constexpr float EnemyXClamp{60.0f};
+        float cameraX = GetCameraCoveredDistance().x;
+        if (Location.x > cameraX + EnemyXClamp) {
+            SetLocation(sVECTOR3D{cameraX + EnemyXClamp, Location.y, Location.z});
+        } else if (Location.x < cameraX - EnemyXClamp) {
+            SetLocation(sVECTOR3D{cameraX - EnemyXClamp, Location.y, Location.z});
+        }
+    }
+
     if (!Engines.empty()) {
         float tmpSpeed = Speed;
         if (tmpSpeed > 6.0f) {

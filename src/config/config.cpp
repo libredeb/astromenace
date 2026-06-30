@@ -98,7 +98,7 @@ sGameConfig::sGameConfig()
     MouseSecondary = SDL_BUTTON_RIGHT;
 
     for (unsigned i = 0; i < config::MAX_HINTS; i++) {
-        NeedShowHint[i] = true;
+        NeedShowHint[i] = false;
     }
 }
 
@@ -322,6 +322,21 @@ static void CheckConfig()
  */
 static void SetupCurrentProfileAndMission()
 {
+    bool anyProfileUsed{false};
+    for (int i = 0; i < config::MAX_PROFILES; i++) {
+        if (Config.Profile[i].Used) {
+            anyProfileUsed = true;
+            break;
+        }
+    }
+
+    if (!anyProfileUsed) {
+        Config.Profile[0].Used = true;
+        strncpy(Config.Profile[0].Name, "default", config::PROFILE_NAME_SIZE - 1);
+        Config.Profile[0].Name[config::PROFILE_NAME_SIZE - 1] = '\0';
+        Config.LastProfile = 0;
+    }
+
     if (Config.LastProfile < 0 || Config.LastProfile >= config::MAX_PROFILES) {
         return;
     }

@@ -1035,7 +1035,7 @@ static void DrawWeaponSlots(std::weak_ptr<cSpaceShip> &SpaceShip)
         int tmpStartX{static_cast<int>(GameConfig().InternalWidth / 2) + 50};
         int tmpOffsetX{384 - 128 - 100};
         if (Lines[i].size() == 1)
-            tmpStartX = GameConfig().InternalWidth / 2 + 256 - 64;
+            tmpStartX = GameConfig().InternalWidth / 2 + 128;
 
         for (unsigned j = 0; j < Lines[i].size(); j++) {
             ShipSlotWeapon(Lines[i][j], tmpStartX + tmpOffsetX * j, tmpStartY + tmpOffsetY * i);
@@ -1092,7 +1092,8 @@ void Workshop_Weaponry()
     int const leftWpnPanelX = (GameConfig().InternalWidth/2 > 457) ? (GameConfig().InternalWidth/2 - 457) : 4;
     int const backSpot2LeftX = (GameConfig().InternalWidth/2 > 480) ? (GameConfig().InternalWidth/2 - 480) : 0;
     int const shopDragLeftX = (GameConfig().InternalWidth/2 > 416) ? (GameConfig().InternalWidth/2 - 416) : 0;
-    int const btn128ShopPrevX = (GameConfig().InternalWidth/2 > 395) ? (GameConfig().InternalWidth/2 - 395) : 4;
+    int const btn128ShopPrevX = leftWpnPanelX + 62;
+    int const btn128ShopNextX = leftWpnPanelX + 210;
     int const leftWpnStockX = (GameConfig().InternalWidth/2 > 445) ? (GameConfig().InternalWidth/2 - 445) : 8;
 
     // start weapon dragging from shopfront
@@ -1254,7 +1255,7 @@ void Workshop_Weaponry()
         }
         WorkshopCreateNewWeapon();
     }
-    if (DrawButton128_2(GameConfig().InternalWidth/2-247,482, vw_GetTextUTF32("Next"), MenuContentTransp, false)) {
+    if (DrawButton128_2(btn128ShopNextX,482, vw_GetTextUTF32("Next"), MenuContentTransp, false)) {
         CurrentWorkshopNewWeapon++;
         if (CurrentWorkshopNewWeapon > 19) {
             CurrentWorkshopNewWeapon = 1;
@@ -1267,7 +1268,7 @@ void Workshop_Weaponry()
         CurrentWorkshopNewWeapon = PrevWeaponGroup();
         WorkshopCreateNewWeapon();
     }
-    if (DrawButton128_2(GameConfig().InternalWidth/2-247,533, vw_GetTextUTF32(GetWeaponGroupTitle(NextWeaponGroup())), MenuContentTransp, false)) {
+    if (DrawButton128_2(btn128ShopNextX,533, vw_GetTextUTF32(GetWeaponGroupTitle(NextWeaponGroup())), MenuContentTransp, false)) {
         CurrentWorkshopNewWeapon = NextWeaponGroup();
         WorkshopCreateNewWeapon();
     }

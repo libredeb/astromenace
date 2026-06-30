@@ -373,7 +373,7 @@ void WorkshopMenu()
 
     // buttons
 
-    int X = 4;
+    int X = 18;
     int Y = 180+100*5;
     if (DrawButton128_2(X,Y, vw_GetTextUTF32("BACK"), MenuContentTransp, false)) {
         cCommand::GetInstance().Set(eCommand::SWITCH_TO_MISSION);
@@ -387,12 +387,12 @@ void WorkshopMenu()
 
 
 
-    X = 140;
+    X = 168;
     bool Off = false;
     if (CurrentWorkshop == 1) {
         Off = true;
     }
-    if (DrawButton200_2(X,Y, vw_GetTextUTF32("Shipyard"), MenuContentTransp, Off)) {
+    if (DrawButton128_2(X,Y, vw_GetTextUTF32("Shipyard"), MenuContentTransp, Off)) {
         CurrentWorkshop = 1;
         // for each menu we have different 3D objects rotations (for best look)
         WorkshopCreateShip(CurrentWorkshop);
@@ -409,12 +409,12 @@ void WorkshopMenu()
     }
 
 
-    X = 284;
+    X = 318;
     Off = false;
     if (CurrentWorkshop == 2) {
         Off = true;
     }
-    if (DrawButton200_2(X,Y, vw_GetTextUTF32("Workshop"), MenuContentTransp, Off)) {
+    if (DrawButton128_2(X,Y, vw_GetTextUTF32("Workshop"), MenuContentTransp, Off)) {
         CurrentWorkshop = 2;
         // for each menu we have different 3D objects rotations (for best look)
         WorkshopCreateShip(CurrentWorkshop);
@@ -430,12 +430,12 @@ void WorkshopMenu()
     }
 
 
-    X = 428;
+    X = 468;
     Off = false;
     if (CurrentWorkshop == 3) {
         Off = true;
     }
-    if (DrawButton200_2(X,Y, vw_GetTextUTF32("Weaponry"), MenuContentTransp, Off)) {
+    if (DrawButton128_2(X,Y, vw_GetTextUTF32("Weaponry"), MenuContentTransp, Off)) {
         CurrentWorkshop = 3;
         // for each menu we have different 3D objects rotations (for best look)
         WorkshopCreateShip(CurrentWorkshop);
@@ -453,7 +453,7 @@ void WorkshopMenu()
 
 
 
-    X = 636;
+    X = 618;
     if (DrawButton128_2(X,Y, vw_GetTextUTF32("START"), MenuContentTransp, false)) {
         if (GameConfig().NeedShowHint[4]) {
             SetCurrentDialogBox(eDialogBox::ShortkeyTipsAndTricks);
