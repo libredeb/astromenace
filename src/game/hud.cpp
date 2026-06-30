@@ -412,27 +412,32 @@ static void AddQuadToDrawBuffer(const sRECT &SrcRect, const sRECT &DstRect,
 
 /*
  * Add character data to local draw buffer.
- * Return character width.
+ * Return character width (scaled).
  */
-static int AddCharToDrawBuffer(char Character, float Xstart, int Ystart,
-                               float Alpha, float ImageWidth, float ImageHeight)
+static float AddCharToDrawBuffer(char Character, float Xstart, int Ystart,
+                               float Alpha, float ImageWidth, float ImageHeight,
+                               float Scale = 1.0f)
 {
     sRECT SrcRect;
     GetHUDCharacterRectangle(Character, SrcRect);
+    int charW = SrcRect.right - SrcRect.left;
+    int charH = SrcRect.bottom - SrcRect.top;
+    int scaledW = static_cast<int>(charW * Scale + 0.5f);
+    int scaledH = static_cast<int>(charH * Scale + 0.5f);
     sRECT DstRect{static_cast<int>(Xstart), Ystart,
-                  static_cast<int>(Xstart) + SrcRect.right - SrcRect.left, Ystart + SrcRect.bottom - SrcRect.top};
+                  static_cast<int>(Xstart) + scaledW, Ystart + scaledH};
 
     AddQuadToDrawBuffer(SrcRect, DstRect, Alpha, ImageWidth, ImageHeight,
                         DrawBuffer, DrawBufferCurrentPosition);
 
-    return SrcRect.right - SrcRect.left;
+    return scaledW;
 }
 
 /*
  * Add string data to local draw buffer.
  */
 static void AddStringToDrawBuffer(const std::string &String, float Xstart, int Ystart,
-                                  float ImageWidth, float ImageHeight)
+                                  float ImageWidth, float ImageHeight, float Scale = 1.0f)
 {
     // first '0' characters should be transparent for more nice look
     float Transp{0.2f};
@@ -442,7 +447,7 @@ static void AddStringToDrawBuffer(const std::string &String, float Xstart, int Y
         }
 
         Xstart += AddCharToDrawBuffer(tmpCharacter, Xstart, Ystart,
-                                      Transp, ImageWidth, ImageHeight);
+                                      Transp, ImageWidth, ImageHeight, Scale);
     }
 }
 
@@ -457,29 +462,32 @@ void SetupHUDText(const int Experience, const int Money)
     float Transp{1.0f};
 
     float const hudScaleX = GameConfig().InternalWidth / 1024.0f;
+    float const centerX = GameConfig().InternalWidth / 2.0f;
     float const iconOffsetX = 57.0f * hudScaleX;
-    float const digitStartX = iconOffsetX - 23.0f * hudScaleX;
+    float const digitOffsetX = (57.0f - 23.0f) * hudScaleX;
+    int const yTop = static_cast<int>(5.0f * hudScaleX + 0.5f);
+    int const yBottom = static_cast<int>(31.0f * hudScaleX + 0.5f);
 
-    AddCharToDrawBuffer('E', GameConfig().InternalWidth / 2 - iconOffsetX, 5,
-                        Transp, HUDFontImageWidth, HUDFontImageHeight);
-    AddCharToDrawBuffer('$', GameConfig().InternalWidth / 2 - iconOffsetX + 1.0f * hudScaleX, 31,
-                        Transp, HUDFontImageWidth, HUDFontImageHeight);
+    AddCharToDrawBuffer('E', centerX - iconOffsetX, yTop,
+                        Transp, HUDFontImageWidth, HUDFontImageHeight, hudScaleX);
+    AddCharToDrawBuffer('$', centerX - iconOffsetX + 1.0f * hudScaleX, yBottom,
+                        Transp, HUDFontImageWidth, HUDFontImageHeight, hudScaleX);
 
     std::ostringstream tmpStream;
     tmpStream << std::fixed << std::setprecision(0)
               << std::setfill('0') << std::setw(7)
               << Experience;
     AddStringToDrawBuffer(tmpStream.str(),
-                          GameConfig().InternalWidth / 2 - digitStartX, 5,
-                          HUDFontImageWidth, HUDFontImageHeight);
+                          centerX - digitOffsetX, yTop,
+                          HUDFontImageWidth, HUDFontImageHeight, hudScaleX);
 
     tmpStream.clear();
     tmpStream.str(std::string{});
     tmpStream << std::setfill('0') << std::setw(7)
               << Money;
     AddStringToDrawBuffer(tmpStream.str(),
-                          GameConfig().InternalWidth / 2 - digitStartX, 31,
-                          HUDFontImageWidth, HUDFontImageHeight);
+                          centerX - digitOffsetX, yBottom,
+                          HUDFontImageWidth, HUDFontImageHeight, hudScaleX);
 }
 
 /*
