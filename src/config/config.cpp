@@ -386,6 +386,7 @@ bool LoadXMLConfigFile(bool NeedResetConfig)
 
     if (!XMLdoc->GetRootEntry()) {
         SaveXMLConfigFile();
+        SetupCurrentProfileAndMission();
         return true;
     }
 
@@ -394,11 +395,13 @@ bool LoadXMLConfigFile(bool NeedResetConfig)
     if (!RootXMLEntry) {
         std::cerr << __func__ << "(): " << "Game configuration file corrupted: " << ConfigFileName << "\n";
         SaveXMLConfigFile();
+        SetupCurrentProfileAndMission();
         return true;
     }
     if ("AstroMenaceSettings" != RootXMLEntry->Name) {
         std::cerr << __func__ << "(): " << "Game configuration file corrupted: " << ConfigFileName << "\n";
         SaveXMLConfigFile();
+        SetupCurrentProfileAndMission();
         return true;
     }
 

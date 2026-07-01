@@ -79,7 +79,7 @@ void RecreateGameWindow()
  * Initial setup on first start and video configuration check.
  * Hardcoded for Hyperpixel 4.0 (720x720) fullscreen.
  */
-static bool VideoConfig(bool FirstStart)
+static bool VideoConfig(bool /*FirstStart*/)
 {
     ChangeGameConfig().Width = 720;
     ChangeGameConfig().Height = 720;
