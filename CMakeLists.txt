@@ -243,6 +243,9 @@ ENDIF(MINGW)
 TARGET_LINK_LIBRARIES(astromenace ${ALL_LIBRARIES})
 
 
+# option to generate VFS with half-resolution textures for ARM devices
+OPTION(ARM_LOW_RES "Generate VFS with half-resolution textures for ARM" OFF)
+
 # generate game data file (gamedata.vfs)
 IF(NOT DONTCREATEVFS)
     SET(astromenace_BIN "astromenace")
@@ -260,11 +263,27 @@ IF(NOT DONTCREATEVFS)
         SET(astromenace_BIN "astromenace.exe")
     ENDIF(MINGW)
 
-    ADD_CUSTOM_COMMAND(
-        TARGET astromenace
-        POST_BUILD
-        COMMAND ${PROJECT_BINARY_DIR}/${astromenace_BIN} --pack --rawdata=${astromenace_DATA} --dir=${PROJECT_BINARY_DIR}
-    )
+    IF(ARM_LOW_RES)
+        SET(astromenace_DATA_FINAL "${PROJECT_BINARY_DIR}/gamedata-lowres/")
+        ADD_CUSTOM_COMMAND(
+            TARGET astromenace
+            POST_BUILD
+            COMMAND python3 ${CMAKE_SOURCE_DIR}/scripts/downscale_gamedata.py
+                --src ${astromenace_DATA}
+                --dst ${astromenace_DATA_FINAL}
+                --factor 0.5
+                --exclude "menu,game,loading,lang"
+            COMMAND ${PROJECT_BINARY_DIR}/${astromenace_BIN} --pack --rawdata=${astromenace_DATA_FINAL} --dir=${PROJECT_BINARY_DIR}
+        )
+        MESSAGE(STATUS "ARM_LOW_RES enabled: textures will be downscaled to 50%")
+    ELSE()
+        SET(astromenace_DATA_FINAL ${astromenace_DATA})
+        ADD_CUSTOM_COMMAND(
+            TARGET astromenace
+            POST_BUILD
+            COMMAND ${PROJECT_BINARY_DIR}/${astromenace_BIN} --pack --rawdata=${astromenace_DATA_FINAL} --dir=${PROJECT_BINARY_DIR}
+        )
+    ENDIF()
 ENDIF(NOT DONTCREATEVFS)
 
 
